@@ -1,0 +1,112 @@
+<div class="content-card form-page">
+    <h3 style="font-size:18px;margin-bottom:24px;">公司信息设置</h3>
+    <form id="companyForm" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>公司名称</label>
+            <input type="text" name="name" value="{$company.name|default='郑州鑫聚康电子科技有限公司'}">
+        </div>
+        <div class="form-group">
+            <label>简称</label>
+            <input type="text" name="short_name" value="{$company.short_name|default='鑫聚康'}">
+        </div>
+        <div class="form-group">
+            <label>公司Logo</label>
+            <div class="upload-box" id="logoBox">
+                {if condition="$company && $company.logo"}
+                <img src="{$company.logo}" alt="">
+                {else/}
+                <div class="placeholder"><div class="icon">📷</div><p>点击上传Logo</p></div>
+                {/if}
+                <input type="file" name="logo" accept="image/*" onchange="previewImage(this, 'logoBox')">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>联系电话</label>
+            <input type="text" name="phone" value="{$company.phone|default=''}">
+        </div>
+        <div class="form-group">
+            <label>电子邮箱</label>
+            <input type="text" name="email" value="{$company.email|default=''}">
+        </div>
+        <div class="form-group">
+            <label>公司地址</label>
+            <input type="text" name="address" value="{$company.address|default=''}">
+        </div>
+        <div class="form-group">
+            <label>传真</label>
+            <input type="text" name="fax" value="{$company.fax|default=''}">
+        </div>
+        <div class="form-group">
+            <label>QQ</label>
+            <input type="text" name="qq" value="{$company.qq|default=''}">
+        </div>
+        <div class="form-group">
+            <label>微信号</label>
+            <input type="text" name="wechat" value="{$company.wechat|default=''}">
+        </div>
+        <div class="form-group">
+            <label>微信二维码</label>
+            <div class="upload-box" id="wechatBox">
+                {if condition="$company && $company.wechat_qrcode"}
+                <img src="{$company.wechat_qrcode}" alt="">
+                {else/}
+                <div class="placeholder"><div class="icon">📷</div><p>上传二维码</p></div>
+                {/if}
+                <input type="file" name="wechat_qrcode" accept="image/*" onchange="previewImage(this, 'wechatBox')">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>备案号</label>
+            <input type="text" name="icp" value="{$company.icp|default=''}">
+        </div>
+        <div class="form-group">
+            <label>版权信息</label>
+            <input type="text" name="copyright" value="{$company.copyright|default=''}">
+        </div>
+        <div class="form-group">
+            <label>公司简介</label>
+            <textarea name="intro" style="height:200px;">{$company.intro|default=''}</textarea>
+        </div>
+        <div class="form-group">
+            <label>企业文化</label>
+            <textarea name="culture" style="height:200px;">{$company.culture|default=''}</textarea>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">保存设置</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+function previewImage(input, boxId) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var box = document.getElementById(boxId);
+            box.innerHTML = '<img src="' + e.target.result + '"><input type="file" name="' + input.name + '" accept="image/*" onchange="previewImage(this, \'' + boxId + '\')">';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$('#companyForm').on('submit', function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+        url: '/admin/company',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(res) {
+            if (res.code == 1) {
+                alert('保存成功');
+                location.reload();
+            } else {
+                alert(res.msg || '保存失败');
+            }
+        },
+        error: function() { alert('网络错误'); }
+    });
+});
+</script>

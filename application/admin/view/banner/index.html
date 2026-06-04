@@ -1,0 +1,63 @@
+<div class="content-card">
+    <div class="toolbar">
+        <div class="left"><h3 style="font-size:18px;">轮播图管理</h3></div>
+        <div class="right">
+            <a href="/admin/banner/add" class="btn btn-success">+ 添加轮播图</a>
+        </div>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th width="60">ID</th>
+                <th width="120">图片</th>
+                <th>标题</th>
+                <th>副标题</th>
+                <th width="80">排序</th>
+                <th width="80">状态</th>
+                <th width="160">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {volist name="banners" id="banner"}
+            <tr>
+                <td>{$banner.id}</td>
+                <td>
+                    {if condition="$banner.image"}
+                    <img src="{$banner.image}" class="thumb" alt="">
+                    {else/}
+                    <div class="thumb" style="display:flex;align-items:center;justify-content:center;color:#ccc;font-size:11px;">暂无</div>
+                    {/if}
+                </td>
+                <td>{$banner.title}</td>
+                <td>{$banner.subtitle}</td>
+                <td>{$banner.sort}</td>
+                <td>{if condition="$banner.status==1"}<span class="status-tag on">显示</span>{else/}<span class="status-tag off">隐藏</span>{/if}</td>
+                <td>
+                    <div class="actions">
+                        <a href="/admin/banner/edit/{$banner.id}" class="btn btn-primary btn-sm">编辑</a>
+                        <button onclick="deleteBanner({$banner.id})" class="btn btn-danger btn-sm">删除</button>
+                    </div>
+                </td>
+            </tr>
+            {/volist}
+        </tbody>
+    </table>
+
+    <div class="pagination">{$banners|raw}</div>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+function deleteBanner(id) {
+    if (!confirm('确定要删除吗？')) return;
+    $.post('/admin/banner/delete', {id: id}, function(res) {
+        if (res.code == 1) {
+            alert('删除成功');
+            location.reload();
+        } else {
+            alert(res.msg);
+        }
+    }, 'json');
+}
+</script>

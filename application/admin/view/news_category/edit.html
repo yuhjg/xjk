@@ -1,0 +1,39 @@
+<div class="content-card form-page">
+    <h3 style="font-size:18px;margin-bottom:24px;">编辑新闻分类</h3>
+    <form id="catForm">
+        <div class="form-group">
+            <label>分类名称 <span class="req">*</span></label>
+            <input type="text" name="name" value="{$category.name}" placeholder="请输入分类名称" required>
+        </div>
+        <div class="form-group">
+            <label>排序</label>
+            <input type="number" name="sort" value="{$category.sort|default='0'}" placeholder="数字越小越靠前">
+        </div>
+        <div class="form-group">
+            <label>状态</label>
+            <select name="status">
+                <option value="1" {if condition="$category.status==1"}selected{/if}>启用</option>
+                <option value="0" {if condition="$category.status==0"}selected{/if}>禁用</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">保存修改</button>
+            <a href="/admin/news_category" class="btn" style="background:#eee;margin-left:12px;" target="mainFrame">返回列表</a>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$('#catForm').on('submit', function(e) {
+    e.preventDefault();
+    $.post('/admin/news_category/edit/{$category.id}', $(this).serialize(), function(res) {
+        if (res.code == 1) {
+            alert('修改成功');
+            window.location.href = '/admin/news_category';
+        } else {
+            alert(res.msg || '修改失败');
+        }
+    }, 'json');
+});
+</script>

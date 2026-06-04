@@ -1,0 +1,85 @@
+<div class="content-card">
+    <div class="toolbar">
+        <div class="left">
+            <form method="get" action="/admin/product" style="display:flex;gap:12px;">
+                <select name="category_id">
+                    <option value="">全部分类</option>
+                    {volist name="categories" id="cat"}
+                    <option value="{$cat.id}" {if condition="$category_id==$cat['id']"}selected{/if}>{$cat.name}</option>
+                    {/volist}
+                </select>
+                <input type="text" name="keyword" value="{$keyword}" placeholder="搜索产品名称">
+                <button type="submit" class="btn btn-primary">搜索</button>
+            </form>
+        </div>
+        <div class="right">
+            <a href="/admin/product/add" class="btn btn-success">+ 添加产品</a>
+        </div>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th width="60">ID</th>
+                <th width="80">图片</th>
+                <th>产品名称</th>
+                <th width="120">分类</th>
+                <th width="80">排序</th>
+                <th width="80">推荐</th>
+                <th width="80">状态</th>
+                <th width="160">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {volist name="products" id="product"}
+            <tr>
+                <td>{$product.id}</td>
+                <td>
+                    {if condition="$product.image"}
+                    <img src="{$product.image}" class="thumb" alt="">
+                    {else/}
+                    <div class="thumb" style="display:flex;align-items:center;justify-content:center;color:#ccc;font-size:11px;">暂无</div>
+                    {/if}
+                </td>
+                <td>{$product.title}</td>
+                <td>{$product.category_name|default='-'}</td>
+                <td>{$product.sort}</td>
+                <td>{if condition="$product.is_recommend==1"}<span class="status-tag on">推荐</span>{else/}<span class="status-tag off">否</span>{/if}</td>
+                <td>{if condition="$product.status==1"}<span class="status-tag on">显示</span>{else/}<span class="status-tag off">隐藏</span>{/if}</td>
+                <td>
+                    <div class="actions">
+                        <a href="/admin/product/edit/{$product.id}" class="btn btn-primary btn-sm">编辑</a>
+                        <button onclick="deleteItem({$product.id}, 'product')" class="btn btn-danger btn-sm">删除</button>
+                    </div>
+                </td>
+            </tr>
+            {/volist}
+        </tbody>
+    </table>
+
+    <div class="pagination">{$products|raw}</div>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+function deleteItem(id, type) {
+    if (!confirm('确定要删除吗？')) return;
+    $.post('/admin/' + type + '/delete', {id: id}, function(res) {
+        if (res.code == 1) {
+            alert('删除成功');
+            location.reload();
+        } else {
+            alert(res.msg);
+        }
+    }, 'json');
+}
+function setStatus(id, status, type) {
+    $.post('/admin/' + type + '/setStatus', {id: id, status: status}, function(res) {
+        if (res.code == 1) {
+            location.reload();
+        } else {
+            alert(res.msg);
+        }
+    }, 'json');
+}
+</script>

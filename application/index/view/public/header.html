@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{$company.short_name|default='鑫聚康'} - {$page_title|default='专业电源适配器制造商'}</title>
+    <meta name="keywords" content="电源适配器,郑州鑫聚康电子科技,开关电源,线性电源">
+    <meta name="description" content="郑州鑫聚康电子科技有限公司-专业电源适配器制造商">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo">鑫聚康<span>电子</span></a>
+            <nav class="nav" id="mainNav">
+                <a href="/" class="{$current_controller=='index'?'active':''}">首页</a>
+                <a href="/about" class="{$current_controller=='about'?'active':''}">关于我们</a>
+                <a href="/product" class="{$current_controller=='product'?'active':''}">产品服务</a>
+                <a href="/news" class="{$current_controller=='newscontroller'?'active':''}">新闻资讯</a>
+                <a href="/contact" class="{$current_controller=='contact'?'active':''}">联系我们</a>
+            </nav>
+            <button class="mobile-menu-btn" onclick="document.getElementById('mainNav').classList.toggle('open')">☰</button>
+        </div>
+    </header>

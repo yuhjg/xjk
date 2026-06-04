@@ -1,0 +1,97 @@
+<div class="content-card form-page">
+    <h3 style="font-size:18px;margin-bottom:24px;">添加产品</h3>
+    <form id="productForm" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>产品名称 <span class="req">*</span></label>
+            <input type="text" name="title" placeholder="请输入产品名称" required>
+        </div>
+        <div class="form-group">
+            <label>产品分类 <span class="req">*</span></label>
+            <select name="category_id" required>
+                <option value="">请选择分类</option>
+                {volist name="categories" id="cat"}
+                <option value="{$cat.id}">{$cat.name}</option>
+                {/volist}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>产品副标题</label>
+            <input type="text" name="subtitle" placeholder="请输入产品副标题">
+        </div>
+        <div class="form-group">
+            <label>产品图片</label>
+            <div class="upload-box" id="imageBox">
+                <div class="placeholder">
+                    <div class="icon">📷</div>
+                    <p>点击上传图片</p>
+                </div>
+                <input type="file" name="image" accept="image/*" onchange="previewImage(this, 'imageBox')">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>产品描述</label>
+            <textarea name="description" placeholder="请输入产品简短描述"></textarea>
+        </div>
+        <div class="form-group">
+            <label>产品详情</label>
+            <textarea name="content" style="height:300px;" placeholder="请输入产品详细内容（支持HTML）"></textarea>
+        </div>
+        <div class="form-group">
+            <label>排序</label>
+            <input type="number" name="sort" value="0" placeholder="数字越小越靠前">
+            <p class="tip">数字越小越靠前</p>
+        </div>
+        <div class="form-group">
+            <label>状态</label>
+            <select name="status">
+                <option value="1">显示</option>
+                <option value="0">隐藏</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>推荐</label>
+            <select name="is_recommend">
+                <option value="0">否</option>
+                <option value="1">是</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">提交保存</button>
+            <a href="/admin/product" class="btn" style="background:#eee;margin-left:12px;">返回列表</a>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+function previewImage(input, boxId) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var box = document.getElementById(boxId);
+            box.innerHTML = '<img src="' + e.target.result + '"><input type="file" name="image" accept="image/*" onchange="previewImage(this, \'' + boxId + '\')">';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$('#productForm').on('submit', function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+        url: '/admin/product/add',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(res) {
+            if (res.code == 1) {
+                alert('添加成功');
+                window.location.href = '/admin/product';
+            } else {
+                alert(res.msg || '添加失败');
+            }
+        },
+        error: function() { alert('网络错误'); }
+    });
+});
+</script>

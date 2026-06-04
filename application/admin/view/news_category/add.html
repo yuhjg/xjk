@@ -1,0 +1,39 @@
+<div class="content-card form-page">
+    <h3 style="font-size:18px;margin-bottom:24px;">添加新闻分类</h3>
+    <form id="catForm">
+        <div class="form-group">
+            <label>分类名称 <span class="req">*</span></label>
+            <input type="text" name="name" placeholder="请输入分类名称" required>
+        </div>
+        <div class="form-group">
+            <label>排序</label>
+            <input type="number" name="sort" value="0" placeholder="数字越小越靠前">
+        </div>
+        <div class="form-group">
+            <label>状态</label>
+            <select name="status">
+                <option value="1">启用</option>
+                <option value="0">禁用</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">提交保存</button>
+            <a href="/admin/news_category" class="btn" style="background:#eee;margin-left:12px;" target="mainFrame">返回列表</a>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$('#catForm').on('submit', function(e) {
+    e.preventDefault();
+    $.post('/admin/news_category/add', $(this).serialize(), function(res) {
+        if (res.code == 1) {
+            alert('添加成功');
+            window.location.href = '/admin/news_category';
+        } else {
+            alert(res.msg || '添加失败');
+        }
+    }, 'json');
+});
+</script>

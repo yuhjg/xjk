@@ -1,0 +1,9 @@
+/.idea
+/.vscode
+/vendor
+*.log
+.env
+/runtime/*
+!/runtime/.gitkeep
+/public/uploads/*
+!/public/uploads/.gitkeep

@@ -1,0 +1,62 @@
+{include file="public/header"}
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+    <div class="container">
+        <a href="/">首页</a> <span>/</span> <span>关于我们</span>
+    </div>
+</div>
+
+<!-- 公司简介 -->
+<section class="section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-text">
+                <h3>{$company.name|default='郑州鑫聚康电子科技有限公司'}</h3>
+                {$company.intro|raw|default=''}
+            </div>
+            <div class="about-image">
+                <span class="no-img">公司形象</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 企业文化 -->
+<section class="section" style="background:#f8fbff;">
+    <div class="container">
+        <div class="section-header">
+            <h2>企业文化</h2>
+            <p>品质第一、客户至上、持续创新、合作共赢</p>
+        </div>
+        <div style="max-width:800px;margin:0 auto;font-size:15px;color:#666;line-height:2;">
+            {$company.culture|raw|default=''}
+        </div>
+    </div>
+</section>
+
+<!-- 统计数据 -->
+<section class="section">
+    <div class="container">
+        <div class="stats">
+            <div class="stat-item">
+                <div class="num" data-suffix="+">14</div>
+                <div class="label">行业经验（年）</div>
+            </div>
+            <div class="stat-item">
+                <div class="num" data-suffix="+">200</div>
+                <div class="label">产品种类</div>
+            </div>
+            <div class="stat-item">
+                <div class="num" data-suffix="+">500</div>
+                <div class="label">服务客户</div>
+            </div>
+            <div class="stat-item">
+                <div class="num" data-suffix="">8</div>
+                <div class="label">国际认证</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{include file="public/footer"}

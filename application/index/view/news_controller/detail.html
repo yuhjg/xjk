@@ -1,0 +1,62 @@
+{include file="public/header"}
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+    <div class="container">
+        <a href="/">首页</a> <span>/</span> <a href="/news">新闻资讯</a> <span>/</span> <span>{$news.title}</span>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="detail-content">
+            <div class="detail-main">
+                {if condition="$news.image"}
+                <div style="text-align:center;margin-bottom:30px;">
+                    <img src="{$news.image}" alt="{$news.title}" style="max-height:400px;border-radius:8px;">
+                </div>
+                {/if}
+                <h1>{$news.title}</h1>
+                <div class="meta">
+                    分类：{$news.category_name|default='新闻'} | 作者：{$news.author|default='admin'} | 发布时间：{$news.create_time|date='Y-m-d'} | 浏览：{$news.views}
+                </div>
+                <div class="body">
+                    {$news.content|raw}
+                </div>
+
+                <!-- 上下篇 -->
+                <div class="page-nav">
+                    {if condition="$prev"}
+                    <a href="/news/{$prev.id}">← {$prev.title}</a>
+                    {else/}
+                    <span></span>
+                    {/if}
+                    {if condition="$next"}
+                    <a href="/news/{$next.id}">{$next.title} →</a>
+                    {else/}
+                    <span></span>
+                    {/if}
+                </div>
+            </div>
+            <div class="detail-sidebar">
+                <div class="sidebar-box">
+                    <h3>新闻分类</h3>
+                    <ul>
+                        <li><a href="/news">全部新闻</a></li>
+                        <li><a href="/news?category_id=1">公司新闻</a></li>
+                        <li><a href="/news?category_id=2">行业动态</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-box">
+                    <h3>联系我们</h3>
+                    <ul>
+                        <li>电话：{$company.phone|default=''}</li>
+                        <li>邮箱：{$company.email|default=''}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{include file="public/footer"}

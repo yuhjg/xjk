@@ -1,0 +1,77 @@
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>{$company.short_name|default='鑫聚康'}电子科技</h4>
+                    <p>{$company.intro|raw|default=''}</p>
+                </div>
+                <div>
+                    <h4>产品中心</h4>
+                    <ul>
+                        {volist name="nav_categories" id="cat"}
+                        <li><a href="/product?category_id={$cat.id}">{$cat.name}</a></li>
+                        {/volist}
+                    </ul>
+                </div>
+                <div>
+                    <h4>快速导航</h4>
+                    <ul>
+                        <li><a href="/">网站首页</a></li>
+                        <li><a href="/about">关于我们</a></li>
+                        <li><a href="/product">产品服务</a></li>
+                        <li><a href="/news">新闻资讯</a></li>
+                        <li><a href="/contact">联系我们</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>联系方式</h4>
+                    <ul>
+                        <li>电话：{$company.phone|default=''}</li>
+                        <li>邮箱：{$company.email|default=''}</li>
+                        <li>地址：{$company.address|default=''}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                {$company.copyright|default='© 2024 郑州鑫聚康电子科技有限公司 版权所有'}
+                {if condition="$company.icp"}
+                 | <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#667;">{$company.icp}</a>
+                {/if}
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Banner轮播
+    (function() {
+        var slides = document.querySelectorAll('.banner-slide');
+        var dots = document.querySelectorAll('.banner-dot');
+        if (slides.length === 0) return;
+        var current = 0;
+        function showSlide(n) {
+            slides.forEach(function(s) { s.classList.remove('active'); });
+            dots.forEach(function(d) { d.classList.remove('active'); });
+            current = (n + slides.length) % slides.length;
+            slides[current].classList.add('active');
+            if (dots[current]) dots[current].classList.add('active');
+        }
+        dots.forEach(function(d, i) { d.addEventListener('click', function() { showSlide(i); }); });
+        setInterval(function() { showSlide(current + 1); }, 5000);
+    })();
+
+    // 数字滚动
+    function animateNum(el, target) {
+        var current = 0;
+        var step = Math.ceil(target / 60);
+        var timer = setInterval(function() {
+            current += step;
+            if (current >= target) { current = target; clearInterval(timer); }
+            el.textContent = current + (el.dataset.suffix || '');
+        }, 20);
+    }
+    </script>
+</body>
+</html>

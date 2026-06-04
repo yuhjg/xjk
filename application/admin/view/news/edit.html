@@ -1,0 +1,100 @@
+<div class="content-card form-page">
+    <h3 style="font-size:18px;margin-bottom:24px;">编辑新闻</h3>
+    <form id="newsForm" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>新闻标题 <span class="req">*</span></label>
+            <input type="text" name="title" value="{$news.title}" placeholder="请输入新闻标题" required>
+        </div>
+        <div class="form-group">
+            <label>新闻分类 <span class="req">*</span></label>
+            <select name="category_id" required>
+                <option value="">请选择分类</option>
+                {volist name="categories" id="cat"}
+                <option value="{$cat.id}" {if condition="$news['category_id']==$cat['id']"}selected{/if}>{$cat.name}</option>
+                {/volist}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>作者</label>
+            <input type="text" name="author" value="{$news.author|default='admin'}" placeholder="请输入作者">
+        </div>
+        <div class="form-group">
+            <label>封面图</label>
+            <div class="upload-box" id="imageBox">
+                {if condition="$news.image"}
+                <img src="{$news.image}" alt="">
+                {else/}
+                <div class="placeholder">
+                    <div class="icon">📷</div>
+                    <p>点击上传图片</p>
+                </div>
+                {/if}
+                <input type="file" name="image" accept="image/*" onchange="previewImage(this, 'imageBox')">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>摘要</label>
+            <textarea name="description" placeholder="请输入新闻摘要">{$news.description|default=''}</textarea>
+        </div>
+        <div class="form-group">
+            <label>新闻内容 <span class="req">*</span></label>
+            <textarea name="content" style="height:300px;" placeholder="请输入新闻内容">{$news.content|default=''}</textarea>
+        </div>
+        <div class="form-group">
+            <label>排序</label>
+            <input type="number" name="sort" value="{$news.sort|default='0'}">
+        </div>
+        <div class="form-group">
+            <label>状态</label>
+            <select name="status">
+                <option value="1" {if condition="$news.status==1"}selected{/if}>显示</option>
+                <option value="0" {if condition="$news.status==0"}selected{/if}>隐藏</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>置顶</label>
+            <select name="is_top">
+                <option value="0" {if condition="$news.is_top==0"}selected{/if}>否</option>
+                <option value="1" {if condition="$news.is_top==1"}selected{/if}>是</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">保存修改</button>
+            <a href="/admin/news" class="btn" style="background:#eee;margin-left:12px;">返回列表</a>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+function previewImage(input, boxId) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var box = document.getElementById(boxId);
+            box.innerHTML = '<img src="' + e.target.result + '"><input type="file" name="image" accept="image/*" onchange="previewImage(this, \'' + boxId + '\')">';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$('#newsForm').on('submit', function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+        url: '/admin/news/edit/{$news.id}',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(res) {
+            if (res.code == 1) {
+                alert('修改成功');
+                window.location.href = '/admin/news';
+            } else {
+                alert(res.msg || '修改失败');
+            }
+        },
+        error: function() { alert('网络错误'); }
+    });
+});
+</script>

@@ -1,0 +1,65 @@
+{include file="public/header"}
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+    <div class="container">
+        <a href="/">首页</a> <span>/</span> <a href="/product">产品服务</a> <span>/</span> <span>{$product.title}</span>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="detail-content">
+            <div class="detail-main">
+                {if condition="$product.image"}
+                <div style="text-align:center;margin-bottom:30px;">
+                    <img src="{$product.image}" alt="{$product.title}" style="max-height:400px;">
+                </div>
+                {/if}
+                <h1>{$product.title}</h1>
+                <div class="meta">
+                    分类：{$product.category_name|default='电源适配器'} | 发布时间：{$product.create_time|date='Y-m-d'}
+                </div>
+                {if condition="$product.subtitle"}
+                <p style="font-size:16px;color:#1a5ca1;margin-bottom:20px;">{$product.subtitle}</p>
+                {/if}
+                <div class="body">
+                    {if condition="$product.content"}
+                    {$product.content|raw}
+                    {else/}
+                    <p>{$product.description|default='暂无详细描述'}</p>
+                    {/if}
+                </div>
+            </div>
+            <div class="detail-sidebar">
+                <div class="sidebar-box">
+                    <h3>产品分类</h3>
+                    <ul>
+                        {volist name="nav_categories" id="cat"}
+                        <li><a href="/product?category_id={$cat.id}">{$cat.name}</a></li>
+                        {/volist}
+                    </ul>
+                </div>
+                {if condition="count($related) > 0"}
+                <div class="sidebar-box">
+                    <h3>相关产品</h3>
+                    <ul>
+                        {volist name="related" id="r"}
+                        <li><a href="/product/{$r.id}">{$r.title}</a></li>
+                        {/volist}
+                    </ul>
+                </div>
+                {/if}
+                <div class="sidebar-box">
+                    <h3>联系我们</h3>
+                    <ul>
+                        <li>电话：{$company.phone|default=''}</li>
+                        <li>邮箱：{$company.email|default=''}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{include file="public/footer"}

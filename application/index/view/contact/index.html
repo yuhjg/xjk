@@ -1,0 +1,100 @@
+{include file="public/header"}
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+    <div class="container">
+        <a href="/">首页</a> <span>/</span> <span>联系我们</span>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>联系我们</h2>
+            <p>期待与您的合作，欢迎来电咨询</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>联系方式</h3>
+                <div class="contact-item">
+                    <div class="icon">📞</div>
+                    <div class="text">
+                        <h4>联系电话</h4>
+                        <p>{$company.phone|default='0371-88888888'}</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="icon">📧</div>
+                    <div class="text">
+                        <h4>电子邮箱</h4>
+                        <p>{$company.email|default='info@xjkpower.com'}</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="icon">📍</div>
+                    <div class="text">
+                        <h4>公司地址</h4>
+                        <p>{$company.address|default='河南省郑州市高新区'}</p>
+                    </div>
+                </div>
+                {if condition="$company.qq"}
+                <div class="contact-item">
+                    <div class="icon">💬</div>
+                    <div class="text">
+                        <h4>QQ咨询</h4>
+                        <p>{$company.qq}</p>
+                    </div>
+                </div>
+                {/if}
+                {if condition="$company.wechat"}
+                <div class="contact-item">
+                    <div class="icon">📱</div>
+                    <div class="text">
+                        <h4>微信号</h4>
+                        <p>{$company.wechat}</p>
+                    </div>
+                </div>
+                {/if}
+                {if condition="$company.fax"}
+                <div class="contact-item">
+                    <div class="icon">📠</div>
+                    <div class="text">
+                        <h4>传真</h4>
+                        <p>{$company.fax}</p>
+                    </div>
+                </div>
+                {/if}
+            </div>
+            <div class="contact-form">
+                <h3>在线留言</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label>您的姓名 <span style="color:#e63946;">*</span></label>
+                        <input type="text" name="name" placeholder="请输入您的姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label>联系电话 <span style="color:#e63946;">*</span></label>
+                        <input type="text" name="phone" placeholder="请输入您的联系电话" required>
+                    </div>
+                    <div class="form-group">
+                        <label>电子邮箱</label>
+                        <input type="email" name="email" placeholder="请输入您的邮箱">
+                    </div>
+                    <div class="form-group">
+                        <label>留言内容 <span style="color:#e63946;">*</span></label>
+                        <textarea name="message" placeholder="请输入您要咨询的内容" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width:100%;text-align:center;">提交留言</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 地图区域 -->
+        <div style="margin-top:50px;background:#f5f8fc;border-radius:8px;height:300px;display:flex;align-items:center;justify-content:center;">
+            <p style="color:#bbb;font-size:16px;">{$company.address|default='河南省郑州市高新区科学大道100号'}</p>
+        </div>
+    </div>
+</section>
+
+{include file="public/footer"}

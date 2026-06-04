@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理 - 鑫聚康电子科技</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="logo">鑫聚康管理后台</div>
+            <div class="menu-group">
+                <div class="menu-group-title">主菜单</div>
+                <a href="/admin/welcome" class="menu-item" target="mainFrame">📊 控制台</a>
+            </div>
+            <div class="menu-group">
+                <div class="menu-group-title">产品管理</div>
+                <a href="/admin/product_category" class="menu-item" target="mainFrame">📂 产品分类</a>
+                <a href="/admin/product" class="menu-item" target="mainFrame">📦 产品列表</a>
+            </div>
+            <div class="menu-group">
+                <div class="menu-group-title">新闻管理</div>
+                <a href="/admin/news_category" class="menu-item" target="mainFrame">📂 新闻分类</a>
+                <a href="/admin/news" class="menu-item" target="mainFrame">📰 新闻列表</a>
+            </div>
+            <div class="menu-group">
+                <div class="menu-group-title">网站设置</div>
+                <a href="/admin/banner" class="menu-item" target="mainFrame">🖼 轮播图管理</a>
+                <a href="/admin/company" class="menu-item" target="mainFrame">⚙ 公司信息</a>
+            </div>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-area">
+            <div class="topbar">
+                <div class="left">欢迎回来，{$admin_name|default='admin'}</div>
+                <div class="right">
+                    <a href="/" target="_blank" style="font-size:13px;color:#1a5ca1;">查看网站</a>
+                    <a href="/admin/logout" class="btn btn-danger btn-sm">退出登录</a>
+                </div>
+            </div>
+            <div class="content">
+                <iframe name="mainFrame" id="mainFrame" src="/admin/welcome" style="width:100%;height:calc(100vh - 64px);border:none;" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

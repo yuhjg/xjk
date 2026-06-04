@@ -1,0 +1,55 @@
+{include file="public/header"}
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+    <div class="container">
+        <a href="/">首页</a> <span>/</span> <span>新闻资讯</span>
+    </div>
+</div>
+
+<!-- 新闻列表 -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>新闻资讯</h2>
+            <p>了解行业最新动态与公司新闻</p>
+        </div>
+
+        <!-- 分类筛选 -->
+        <div class="category-tabs">
+            <a href="/news" class="{:$category_id==0?'active':''}">全部新闻</a>
+            {volist name="categories" id="cat"}
+            <a href="/news?category_id={$cat.id}" class="{:$category_id==$cat['id']?'active':''}">{$cat.name}</a>
+            {/volist}
+        </div>
+
+        <div class="news-list" style="grid-template-columns:1fr;">
+            {volist name="news_list" id="news"}
+            <a href="/news/{$news.id}" class="news-card">
+                <div class="img-box">
+                    {if condition="$news.image"}
+                    <img src="{$news.image}" alt="{$news.title}">
+                    {else/}
+                    <span class="no-img">新闻资讯</span>
+                    {/if}
+                </div>
+                <div class="info">
+                    <div class="date">{$news.create_time|date='Y-m-d'} {if condition="$news.is_top==1"}<span class="status-tag on" style="margin-left:8px;">置顶</span>{/if}</div>
+                    <h3>{$news.title}</h3>
+                    <p>{$news.description|default=''}</p>
+                </div>
+            </a>
+            {/volist}
+        </div>
+
+        {empty name="news_list"}
+        <div style="text-align:center;padding:60px;color:#999;">
+            <p style="font-size:18px;">暂无相关新闻</p>
+        </div>
+        {/empty}
+
+        <div class="pagination">{$news_list|raw}</div>
+    </div>
+</section>
+
+{include file="public/footer"}

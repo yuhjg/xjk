@@ -1,0 +1,131 @@
+{include file="public/header"}
+
+<!-- Banner -->
+<section class="banner">
+    <div class="banner-slides">
+        {volist name="banners" id="banner"}
+        <div class="banner-slide {if condition='$i==1'}active{/if}">
+            <div class="banner-content">
+                <h2>{$banner.title}</h2>
+                <p>{$banner.subtitle}</p>
+                <a href="{$banner.link|default='/product'}" class="btn-primary">了解产品</a>
+            </div>
+        </div>
+        {/volist}
+    </div>
+    {if condition="count($banners) > 1"}
+    <div class="banner-dots">
+        {volist name="banners" id="banner"}
+        <div class="banner-dot {if condition='$i==1'}active{/if}"></div>
+        {/volist}
+    </div>
+    {/if}
+</section>
+
+<!-- 推荐产品 -->
+<section class="section" style="background:#f8fbff;">
+    <div class="container">
+        <div class="section-header">
+            <h2>核心产品</h2>
+            <p>专业电源适配器解决方案，品质铸就信赖</p>
+        </div>
+        <div class="product-grid">
+            {volist name="recommend_products" id="product"}
+            <a href="/product/{$product.id}" class="product-card">
+                <div class="img-box">
+                    {if condition="$product.image"}
+                    <img src="{$product.image}" alt="{$product.title}">
+                    {else/}
+                    <span class="no-img">电源适配器</span>
+                    {/if}
+                </div>
+                <div class="info">
+                    <h3>{$product.title}</h3>
+                    <p>{$product.subtitle|default=$product.description|default=''}</p>
+                    <span class="tag">{$product.category_name|default='电源适配器'}</span>
+                </div>
+            </a>
+            {/volist}
+        </div>
+        <div style="text-align:center;margin-top:40px;">
+            <a href="/product" class="btn-primary" style="background:#1a5ca1;">查看全部产品 →</a>
+        </div>
+    </div>
+</section>
+
+<!-- 关于我们 -->
+<section class="section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-text">
+                <h3>关于鑫聚康</h3>
+                <p>{$company.intro|raw|default=''}</p>
+                <a href="/about" class="btn-primary" style="background:#1a5ca1;margin-top:20px;">了解更多 →</a>
+            </div>
+            <div class="about-image">
+                <span class="no-img">郑州鑫聚康电子科技有限公司</span>
+            </div>
+        </div>
+        <div class="stats">
+            <div class="stat-item">
+                <div class="num" data-suffix="+" id="stat1">0</div>
+                <div class="label">行业经验（年）</div>
+            </div>
+            <div class="stat-item">
+                <div class="num" data-suffix="+" id="stat2">0</div>
+                <div class="label">产品种类</div>
+            </div>
+            <div class="stat-item">
+                <div class="num" data-suffix="+" id="stat3">0</div>
+                <div class="label">服务客户</div>
+            </div>
+            <div class="stat-item">
+                <div class="num" data-suffix="" id="stat4">0</div>
+                <div class="label">国际认证</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 新闻资讯 -->
+<section class="section" style="background:#f8fbff;">
+    <div class="container">
+        <div class="section-header">
+            <h2>新闻资讯</h2>
+            <p>了解行业最新动态与公司新闻</p>
+        </div>
+        <div class="news-list">
+            {volist name="latest_news" id="news"}
+            <a href="/news/{$news.id}" class="news-card">
+                <div class="img-box">
+                    {if condition="$news.image"}
+                    <img src="{$news.image}" alt="{$news.title}">
+                    {else/}
+                    <span class="no-img">新闻资讯</span>
+                    {/if}
+                </div>
+                <div class="info">
+                    <div class="date">{$news.create_time|date='Y-m-d'}</div>
+                    <h3>{$news.title}</h3>
+                    <p>{$news.description|default=''}</p>
+                </div>
+            </a>
+            {/volist}
+        </div>
+        <div style="text-align:center;margin-top:40px;">
+            <a href="/news" class="btn-primary" style="background:#1a5ca1;">查看全部新闻 →</a>
+        </div>
+    </div>
+</section>
+
+<script>
+// 首页数字动画
+setTimeout(function() {
+    animateNum(document.getElementById('stat1'), 14);
+    animateNum(document.getElementById('stat2'), 200);
+    animateNum(document.getElementById('stat3'), 500);
+    animateNum(document.getElementById('stat4'), 8);
+}, 500);
+</script>
+
+{include file="public/footer"}

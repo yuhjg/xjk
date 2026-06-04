@@ -1,0 +1,55 @@
+{include file="public/header"}
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+    <div class="container">
+        <a href="/">首页</a> <span>/</span> <span>产品服务</span>
+    </div>
+</div>
+
+<!-- 产品列表 -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>产品中心</h2>
+            <p>专业电源适配器解决方案，满足多样化需求</p>
+        </div>
+
+        <!-- 分类筛选 -->
+        <div class="category-tabs">
+            <a href="/product" class="{:$category_id==0?'active':''}">全部产品</a>
+            {volist name="categories" id="cat"}
+            <a href="/product?category_id={$cat.id}" class="{:$category_id==$cat['id']?'active':''}">{$cat.name}</a>
+            {/volist}
+        </div>
+
+        <div class="product-grid">
+            {volist name="products" id="product"}
+            <a href="/product/{$product.id}" class="product-card">
+                <div class="img-box">
+                    {if condition="$product.image"}
+                    <img src="{$product.image}" alt="{$product.title}">
+                    {else/}
+                    <span class="no-img">电源适配器</span>
+                    {/if}
+                </div>
+                <div class="info">
+                    <h3>{$product.title}</h3>
+                    <p>{$product.subtitle|default=$product.description|default=''}</p>
+                    <span class="tag">{$product.category_name|default=''}</span>
+                </div>
+            </a>
+            {/volist}
+        </div>
+
+        {empty name="products"}
+        <div style="text-align:center;padding:60px;color:#999;">
+            <p style="font-size:18px;">暂无相关产品</p>
+        </div>
+        {/empty}
+
+        <div class="pagination">{$products|raw}</div>
+    </div>
+</section>
+
+{include file="public/footer"}
