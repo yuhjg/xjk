@@ -24,7 +24,7 @@
                     <div class="icon">📷</div>
                     <p>点击上传图片（建议尺寸 1920×500）</p>
                 </div>
-                <input type="file" name="image" accept="image/*" onchange="previewImage(this, 'imageBox')">
+                <input type="file" name="image" id="imageInput" accept="image/*" onchange="previewImage(this, 'imageBox')">
             </div>
         </div>
         <div class="form-group">
@@ -56,7 +56,12 @@ function previewImage(input, boxId) {
         var reader = new FileReader();
         reader.onload = function(e) {
             var box = document.getElementById(boxId);
-            box.innerHTML = '<img src="' + e.target.result + '"><input type="file" name="image" accept="image/*" onchange="previewImage(this, \'' + boxId + '\')">';
+            var fileInput = input;
+            box.innerHTML = '';
+            var img = document.createElement('img');
+            img.src = e.target.result;
+            box.appendChild(img);
+            box.appendChild(fileInput);
         };
         reader.readAsDataURL(input.files[0]);
     }
@@ -70,6 +75,7 @@ $('#bannerForm').on('submit', function(e) {
         data: formData,
         processData: false,
         contentType: false,
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
         success: function(res) {
             if (res.code == 1) {
                 alert('添加成功');
@@ -78,7 +84,7 @@ $('#bannerForm').on('submit', function(e) {
                 alert(res.msg || '添加失败');
             }
         },
-        error: function() { alert('网络错误'); }
+        error: function(xhr) { alert('提交失败，请重试'); }
     });
 });
 </script>

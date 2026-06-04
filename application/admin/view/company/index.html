@@ -25,7 +25,7 @@
                 {else/}
                 <div class="placeholder"><div class="icon">📷</div><p>点击上传Logo</p></div>
                 {/if}
-                <input type="file" name="logo" accept="image/*" onchange="previewImage(this, 'logoBox')">
+                <input type="file" name="logo" id="logoInput" accept="image/*" onchange="previewImage(this, 'logoBox')">
             </div>
         </div>
         <div class="form-group">
@@ -60,7 +60,7 @@
                 {else/}
                 <div class="placeholder"><div class="icon">📷</div><p>上传二维码</p></div>
                 {/if}
-                <input type="file" name="wechat_qrcode" accept="image/*" onchange="previewImage(this, 'wechatBox')">
+                <input type="file" name="wechat_qrcode" id="wechatInput" accept="image/*" onchange="previewImage(this, 'wechatBox')">
             </div>
         </div>
         <div class="form-group">
@@ -92,7 +92,12 @@ function previewImage(input, boxId) {
         var reader = new FileReader();
         reader.onload = function(e) {
             var box = document.getElementById(boxId);
-            box.innerHTML = '<img src="' + e.target.result + '"><input type="file" name="' + input.name + '" accept="image/*" onchange="previewImage(this, \'' + boxId + '\')">';
+            var fileInput = input;
+            box.innerHTML = '';
+            var img = document.createElement('img');
+            img.src = e.target.result;
+            box.appendChild(img);
+            box.appendChild(fileInput);
         };
         reader.readAsDataURL(input.files[0]);
     }
@@ -106,6 +111,7 @@ $('#companyForm').on('submit', function(e) {
         data: formData,
         processData: false,
         contentType: false,
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
         success: function(res) {
             if (res.code == 1) {
                 alert('保存成功');
@@ -114,7 +120,7 @@ $('#companyForm').on('submit', function(e) {
                 alert(res.msg || '保存失败');
             }
         },
-        error: function() { alert('网络错误'); }
+        error: function(xhr) { alert('提交失败，请重试'); }
     });
 });
 </script>
