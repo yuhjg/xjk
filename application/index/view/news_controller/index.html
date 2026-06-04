@@ -25,7 +25,7 @@
 
         <div class="news-list" style="grid-template-columns:1fr;">
             {volist name="news_list" id="news"}
-            <a href="/news/detail/{$news.id}" class="news-card">
+            <a href="/news/{$news.id}" class="news-card">
                 <div class="img-box">
                     {if condition="$news.image"}
                     <img src="{$news.image}" alt="{$news.title}">

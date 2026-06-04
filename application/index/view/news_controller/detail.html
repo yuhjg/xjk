@@ -27,12 +27,12 @@
                 <!-- 上下篇 -->
                 <div class="page-nav">
                     {if condition="$prev"}
-                    <a href="/news/detail/{$prev.id}">← {$prev.title}</a>
+                    <a href="/news/{$prev.id}">← {$prev.title}</a>
                     {else/}
                     <span></span>
                     {/if}
                     {if condition="$next"}
-                    <a href="/news/detail/{$next.id}">{$next.title} →</a>
+                    <a href="/news/{$next.id}">{$next.title} →</a>
                     {else/}
                     <span></span>
                     {/if}
