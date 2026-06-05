@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+<div class="content-card">
+    <div class="toolbar">
+        <div class="left">
+            <form method="get" action="/admin/message" style="display:flex;gap:12px;">
+                <select name="is_read">
+                    <option value="-1">全部状态</option>
+                    <option value="0" {if condition="$is_read===0"}selected{/if}>未读</option>
+                    <option value="1" {if condition="$is_read===1"}selected{/if}>已读</option>
+                </select>
+                <input type="text" name="keyword" value="{$keyword}" placeholder="搜索姓名/电话">
+                <button type="submit" class="btn btn-primary">搜索</button>
+            </form>
+        </div>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th width="60">ID</th>
+                <th width="100">姓名</th>
+                <th width="140">联系电话</th>
+                <th width="180">邮箱</th>
+                <th>留言内容</th>
+                <th width="80">状态</th>
+                <th width="160">时间</th>
+                <th width="140">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {volist name="messages" id="msg"}
+            <tr>
+                <td>{$msg.id}</td>
+                <td>{$msg.name}</td>
+                <td>{$msg.phone}</td>
+                <td>{$msg.email|default='-'}</td>
+                <td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{$msg.content}</td>
+                <td>{if condition="$msg.is_read==0"}<span class="status-tag off">未读</span>{else/}<span class="status-tag on">已读</span>{/if}</td>
+                <td>{$msg.create_time|date='Y-m-d H:i'}</td>
+                <td>
+                    <div class="actions">
+                        <a href="/admin/message/detail/{$msg.id}" class="btn btn-primary btn-sm">查看</a>
+                        <button onclick="deleteItem({$msg.id})" class="btn btn-danger btn-sm">删除</button>
+                    </div>
+                </td>
+            </tr>
+            {/volist}
+            {empty name="messages"}
+            <tr><td colspan="8" style="text-align:center;padding:40px;color:#999;">暂无留言</td></tr>
+            {/empty}
+        </tbody>
+    </table>
+
+    <div class="pagination">{$messages|raw}</div>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+function deleteItem(id) {
+    if (!confirm('确定要删除这条留言吗？')) return;
+    $.post('/admin/message/delete', {id: id}, function(res) {
+        if (res.code == 1) {
+            alert('删除成功');
+            location.reload();
+        } else {
+            alert(res.msg);
+        }
+    }, 'json');
+}
+</script>
+</body>
+</html>

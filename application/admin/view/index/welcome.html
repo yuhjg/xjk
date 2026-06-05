@@ -10,20 +10,30 @@
     <h3 style="font-size:20px;margin-bottom:20px;">📊 控制台</h3>
     <div class="dashboard-stats">
         <div class="dash-stat">
-            <div class="num">4</div>
+            <div class="num">{$stats.product_category}</div>
             <div class="label">产品分类</div>
         </div>
         <div class="dash-stat">
-            <div class="num">6</div>
+            <div class="num">{$stats.product}</div>
             <div class="label">产品总数</div>
         </div>
         <div class="dash-stat">
-            <div class="num">2</div>
+            <div class="num">{$stats.news_category}</div>
             <div class="label">新闻分类</div>
         </div>
         <div class="dash-stat">
-            <div class="num">3</div>
+            <div class="num">{$stats.news}</div>
             <div class="label">新闻总数</div>
+        </div>
+    </div>
+    <div class="dashboard-stats" style="margin-top:20px;">
+        <div class="dash-stat">
+            <div class="num">{$stats.message}</div>
+            <div class="label">留言总数</div>
+        </div>
+        <div class="dash-stat" style="cursor:pointer;" onclick="window.location.href='/admin/message'">
+            <div class="num" style="color:#e63946;">{$stats.message_unread}</div>
+            <div class="label">未读留言</div>
         </div>
     </div>
     <div style="padding:30px;background:#f8fbff;border-radius:8px;text-align:center;color:#999;">

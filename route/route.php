@@ -6,6 +6,7 @@ Route::get('about', 'index/About/index');
 Route::get('product/:id', 'index/Product/detail');
 Route::get('news/:id', 'index/News/detail');
 Route::get('contact', 'index/Contact/index');
+Route::post('contact/submit', 'index/Contact/submit');
 Route::get('news', 'index/News/index');
 Route::get('product', 'index/Product/index');
 
@@ -61,5 +62,11 @@ Route::get('admin/banner/edit/:id', 'admin/Banner/edit');
 Route::post('admin/banner/edit/:id', 'admin/Banner/edit');
 Route::post('admin/banner/delete', 'admin/Banner/delete');
 Route::get('admin/banner', 'admin/Banner/index');
+
+// 后台留言管理
+Route::get('admin/message/detail/:id', 'admin/Message/detail');
+Route::post('admin/message/delete', 'admin/Message/delete');
+Route::post('admin/message/setRead', 'admin/Message/setRead');
+Route::get('admin/message', 'admin/Message/index');
 
 return [];

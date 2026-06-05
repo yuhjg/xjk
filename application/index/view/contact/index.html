@@ -97,4 +97,35 @@
     </div>
 </section>
 
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = this.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = '提交中...';
+
+    $.ajax({
+        url: '/contact/submit',
+        type: 'POST',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function(res) {
+            if (res.code === 1) {
+                alert(res.msg);
+                document.getElementById('contactForm').reset();
+            } else {
+                alert(res.msg);
+            }
+        },
+        error: function() {
+            alert('网络错误，请稍后重试');
+        },
+        complete: function() {
+            btn.disabled = false;
+            btn.textContent = '提交留言';
+        }
+    });
+});
+</script>
+
 {include file="public/footer"}

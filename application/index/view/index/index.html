@@ -4,7 +4,8 @@
 <section class="banner">
     <div class="banner-slides">
         {volist name="banners" id="banner"}
-        <div class="banner-slide {if condition='$i==1'}active{/if}">
+        <div class="banner-slide {if condition='$i==1'}active{/if}" {if condition="$banner.image"}style="background-image:url('{$banner.image}');background-size:cover;background-position:center;"{/if}>
+            <div class="banner-overlay"></div>
             <div class="banner-content">
                 <h2>{$banner.title}</h2>
                 <p>{$banner.subtitle}</p>

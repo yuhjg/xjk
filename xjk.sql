@@ -122,6 +122,22 @@ CREATE TABLE `xjk_company` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='公司信息表';
 
 -- -------------------------------------------
+-- 留言表
+-- -------------------------------------------
+DROP TABLE IF EXISTS `xjk_message`;
+CREATE TABLE `xjk_message` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '姓名',
+  `phone` varchar(30) NOT NULL DEFAULT '' COMMENT '联系电话',
+  `email` varchar(50) NOT NULL DEFAULT '' COMMENT '邮箱',
+  `content` text COMMENT '留言内容',
+  `is_read` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否已读:1是,0否',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='留言表';
+
+-- -------------------------------------------
 -- 轮播图表
 -- -------------------------------------------
 DROP TABLE IF EXISTS `xjk_banner`;
