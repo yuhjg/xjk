@@ -4,10 +4,9 @@ Route::get('/', 'index/Index/index');
 Route::get('about', 'index/About/index');
 
 Route::get('product/:id', 'index/Product/detail');
-
-Route::get('news/:id', 'index/NewsController/detail');
+Route::get('news/:id', 'index/News/detail');
 Route::get('contact', 'index/Contact/index');
-Route::get('news', 'index/NewsController/index');
+Route::get('news', 'index/News/index');
 Route::get('product', 'index/Product/index');
 
 // 后台路由
@@ -18,50 +17,49 @@ Route::get('admin/index', 'admin/Index/index');
 Route::get('admin/welcome', 'admin/Index/welcome');
 
 // 后台产品
-
-Route::get('admin/product/add', 'admin/ProductController/add');
-Route::post('admin/product/add', 'admin/ProductController/add');
-Route::get('admin/product/edit/:id', 'admin/ProductController/edit');
-Route::post('admin/product/edit/:id', 'admin/ProductController/edit');
-Route::post('admin/product/delete', 'admin/ProductController/delete');
-Route::post('admin/product/setStatus', 'admin/ProductController/setStatus');
-Route::get('admin/product', 'admin/ProductController/index');
+Route::get('admin/product/add', 'admin/Product/add');
+Route::post('admin/product/add', 'admin/Product/add');
+Route::get('admin/product/edit/:id', 'admin/Product/edit');
+Route::post('admin/product/edit/:id', 'admin/Product/edit');
+Route::post('admin/product/delete', 'admin/Product/delete');
+Route::post('admin/product/setStatus', 'admin/Product/setStatus');
+Route::get('admin/product', 'admin/Product/index');
 
 // 后台产品分类
-Route::get('admin/product_category/add', 'admin/ProductCategoryController/add');
-Route::post('admin/product_category/add', 'admin/ProductCategoryController/add');
-Route::get('admin/product_category/edit/:id', 'admin/ProductCategoryController/edit');
-Route::post('admin/product_category/edit/:id', 'admin/ProductCategoryController/edit');
-Route::post('admin/product_category/delete', 'admin/ProductCategoryController/delete');
-Route::get('admin/product_category', 'admin/ProductCategoryController/index');
+Route::get('admin/product_category/add', 'admin/ProductCategory/add');
+Route::post('admin/product_category/add', 'admin/ProductCategory/add');
+Route::get('admin/product_category/edit/:id', 'admin/ProductCategory/edit');
+Route::post('admin/product_category/edit/:id', 'admin/ProductCategory/edit');
+Route::post('admin/product_category/delete', 'admin/ProductCategory/delete');
+Route::get('admin/product_category', 'admin/ProductCategory/index');
 
 // 后台新闻
-Route::get('admin/news/add', 'admin/NewsController/add');
-Route::post('admin/news/add', 'admin/NewsController/add');
-Route::get('admin/news/edit/:id', 'admin/NewsController/edit');
-Route::post('admin/news/edit/:id', 'admin/NewsController/edit');
-Route::post('admin/news/delete', 'admin/NewsController/delete');
-Route::post('admin/news/setStatus', 'admin/NewsController/setStatus');
-Route::get('admin/news', 'admin/NewsController/index');
+Route::get('admin/news/add', 'admin/News/add');
+Route::post('admin/news/add', 'admin/News/add');
+Route::get('admin/news/edit/:id', 'admin/News/edit');
+Route::post('admin/news/edit/:id', 'admin/News/edit');
+Route::post('admin/news/delete', 'admin/News/delete');
+Route::post('admin/news/setStatus', 'admin/News/setStatus');
+Route::get('admin/news', 'admin/News/index');
 
 // 后台新闻分类
-Route::get('admin/news_category/add', 'admin/NewsCategoryController/add');
-Route::post('admin/news_category/add', 'admin/NewsCategoryController/add');
-Route::get('admin/news_category/edit/:id', 'admin/NewsCategoryController/edit');
-Route::post('admin/news_category/edit/:id', 'admin/NewsCategoryController/edit');
-Route::post('admin/news_category/delete', 'admin/NewsCategoryController/delete');
-Route::get('admin/news_category', 'admin/NewsCategoryController/index');
+Route::get('admin/news_category/add', 'admin/NewsCategory/add');
+Route::post('admin/news_category/add', 'admin/NewsCategory/add');
+Route::get('admin/news_category/edit/:id', 'admin/NewsCategory/edit');
+Route::post('admin/news_category/edit/:id', 'admin/NewsCategory/edit');
+Route::post('admin/news_category/delete', 'admin/NewsCategory/delete');
+Route::get('admin/news_category', 'admin/NewsCategory/index');
 
 // 后台公司信息
-Route::get('admin/company', 'admin/CompanyController/index');
-Route::post('admin/company', 'admin/CompanyController/index');
+Route::get('admin/company', 'admin/Company/index');
+Route::post('admin/company', 'admin/Company/index');
 
 // 后台轮播图
-Route::get('admin/banner/add', 'admin/BannerController/add');
-Route::post('admin/banner/add', 'admin/BannerController/add');
-Route::get('admin/banner/edit/:id', 'admin/BannerController/edit');
-Route::post('admin/banner/edit/:id', 'admin/BannerController/edit');
-Route::post('admin/banner/delete', 'admin/BannerController/delete');
-Route::get('admin/banner', 'admin/BannerController/index');
+Route::get('admin/banner/add', 'admin/Banner/add');
+Route::post('admin/banner/add', 'admin/Banner/add');
+Route::get('admin/banner/edit/:id', 'admin/Banner/edit');
+Route::post('admin/banner/edit/:id', 'admin/Banner/edit');
+Route::post('admin/banner/delete', 'admin/Banner/delete');
+Route::get('admin/banner', 'admin/Banner/index');
 
 return [];

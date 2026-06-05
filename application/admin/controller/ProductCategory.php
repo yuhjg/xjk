@@ -1,13 +1,13 @@
 <?php
 namespace app\admin\controller;
 
-use app\common\model\ProductCategory;
+use app\common\model\ProductCategory as ProductCategoryModel;
 
-class ProductCategoryController extends Base
+class ProductCategory extends Base
 {
     public function index()
     {
-        $categories = ProductCategory::order('sort', 'asc')->paginate(20);
+        $categories = ProductCategoryModel::order('sort', 'asc')->paginate(20);
         $this->assign('categories', $categories);
         return $this->fetch();
     }
@@ -26,7 +26,7 @@ class ProductCategoryController extends Base
                 return $this->errorJson($result);
             }
 
-            if (ProductCategory::create($data)) {
+            if (ProductCategoryModel::create($data)) {
                 return $this->successJson('添加成功');
             }
             return $this->errorJson('添加失败');
@@ -40,13 +40,13 @@ class ProductCategoryController extends Base
 
         if ($this->request->isPost()) {
             $data = $this->request->post();
-            if (ProductCategory::where('id', $id)->update($data) !== false) {
+            if (ProductCategoryModel::where('id', $id)->update($data) !== false) {
                 return $this->successJson('修改成功');
             }
             return $this->errorJson('修改失败');
         }
 
-        $category = ProductCategory::get($id);
+        $category = ProductCategoryModel::get($id);
         $this->assign('category', $category);
         return $this->fetch();
     }
@@ -54,7 +54,7 @@ class ProductCategoryController extends Base
     public function delete()
     {
         $id = $this->request->param('id', 0, 'intval');
-        if (ProductCategory::destroy($id)) {
+        if (ProductCategoryModel::destroy($id)) {
             return $this->successJson('删除成功');
         }
         return $this->errorJson('删除失败');

@@ -1,17 +1,17 @@
 <?php
 namespace app\admin\controller;
 
-use app\common\model\Product;
-use app\common\model\ProductCategory;
+use app\common\model\News as NewsModel;
+use app\common\model\NewsCategory;
 
-class ProductController extends Base
+class News extends Base
 {
     public function index()
     {
         $keyword = $this->request->param('keyword', '', 'trim');
         $category_id = $this->request->param('category_id', 0, 'intval');
 
-        $query = Product::with('category');
+        $query = NewsModel::with('category');
         if ($keyword) {
             $query->where('title', 'like', '%' . $keyword . '%');
         }
@@ -19,13 +19,13 @@ class ProductController extends Base
             $query->where('category_id', $category_id);
         }
 
-        $products = $query->order('sort', 'asc')->order('id', 'desc')->paginate(15, false, [
+        $news_list = $query->order('is_top', 'desc')->order('create_time', 'desc')->paginate(15, false, [
             'query' => ['keyword' => $keyword, 'category_id' => $category_id]
         ]);
 
-        $categories = ProductCategory::where('status', 1)->order('sort', 'asc')->select();
+        $categories = NewsCategory::where('status', 1)->order('sort', 'asc')->select();
 
-        $this->assign('products', $products);
+        $this->assign('news_list', $news_list);
         $this->assign('categories', $categories);
         $this->assign('keyword', $keyword);
         $this->assign('category_id', $category_id);
@@ -40,7 +40,7 @@ class ProductController extends Base
                 'title' => 'require|max:200',
                 'category_id' => 'require|number',
             ], [
-                'title.require' => '产品名称不能为空',
+                'title.require' => '新闻标题不能为空',
                 'category_id.require' => '请选择分类',
             ]);
 
@@ -48,18 +48,18 @@ class ProductController extends Base
                 return $this->iframeMsg($result, 0);
             }
 
-            $image = $this->uploadFile('image', 'product');
+            $image = $this->uploadFile('image', 'news');
             if ($image) {
                 $data['image'] = $image;
             }
 
-            if (Product::create($data)) {
-                return $this->iframeMsg('添加成功', 1, '/admin/product');
+            if (NewsModel::create($data)) {
+                return $this->iframeMsg('添加成功', 1, '/admin/news');
             }
             return $this->iframeMsg('添加失败', 0);
         }
 
-        $categories = ProductCategory::where('status', 1)->order('sort', 'asc')->select();
+        $categories = NewsCategory::where('status', 1)->order('sort', 'asc')->select();
         $this->assign('categories', $categories);
         return $this->fetch();
     }
@@ -74,7 +74,7 @@ class ProductController extends Base
                 'title' => 'require|max:200',
                 'category_id' => 'require|number',
             ], [
-                'title.require' => '产品名称不能为空',
+                'title.require' => '新闻标题不能为空',
                 'category_id.require' => '请选择分类',
             ]);
 
@@ -82,26 +82,26 @@ class ProductController extends Base
                 return $this->iframeMsg($result, 0);
             }
 
-            $image = $this->uploadFile('image', 'product');
+            $image = $this->uploadFile('image', 'news');
             if ($image) {
                 $data['image'] = $image;
             } else {
                 unset($data['image']);
             }
 
-            if (Product::where('id', $id)->update($data) !== false) {
-                return $this->iframeMsg('修改成功', 1, '/admin/product');
+            if (NewsModel::where('id', $id)->update($data) !== false) {
+                return $this->iframeMsg('修改成功', 1, '/admin/news');
             }
             return $this->iframeMsg('修改失败', 0);
         }
 
-        $product = Product::get($id);
-        if (!$product) {
-            $this->error('产品不存在');
+        $news = NewsModel::get($id);
+        if (!$news) {
+            $this->error('新闻不存在');
         }
 
-        $categories = ProductCategory::where('status', 1)->order('sort', 'asc')->select();
-        $this->assign('product', $product);
+        $categories = NewsCategory::where('status', 1)->order('sort', 'asc')->select();
+        $this->assign('news', $news);
         $this->assign('categories', $categories);
         return $this->fetch();
     }
@@ -109,7 +109,7 @@ class ProductController extends Base
     public function delete()
     {
         $id = $this->request->param('id', 0, 'intval');
-        if (Product::destroy($id)) {
+        if (NewsModel::destroy($id)) {
             return $this->successJson('删除成功');
         }
         return $this->errorJson('删除失败');
@@ -120,7 +120,7 @@ class ProductController extends Base
         $id = $this->request->param('id', 0, 'intval');
         $status = $this->request->param('status', 0, 'intval');
 
-        if (Product::where('id', $id)->update(['status' => $status]) !== false) {
+        if (NewsModel::where('id', $id)->update(['status' => $status]) !== false) {
             return $this->successJson('操作成功');
         }
         return $this->errorJson('操作失败');

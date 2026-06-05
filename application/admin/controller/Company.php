@@ -1,9 +1,9 @@
 <?php
 namespace app\admin\controller;
 
-use app\common\model\Company;
+use app\common\model\Company as CompanyModel;
 
-class CompanyController extends Base
+class Company extends Base
 {
     public function index()
     {
@@ -24,20 +24,20 @@ class CompanyController extends Base
                 unset($data['wechat_qrcode']);
             }
 
-            $company = Company::find(1);
+            $company = CompanyModel::find(1);
             if ($company) {
                 if ($company->save($data) !== false) {
                     return $this->iframeMsg('保存成功', 1, '/admin/company');
                 }
             } else {
-                if (Company::create($data)) {
+                if (CompanyModel::create($data)) {
                     return $this->iframeMsg('保存成功', 1, '/admin/company');
                 }
             }
             return $this->iframeMsg('保存失败', 0);
         }
 
-        $company = Company::find(1);
+        $company = CompanyModel::find(1);
         $this->assign('company', $company);
         return $this->fetch();
     }

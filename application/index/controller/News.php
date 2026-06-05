@@ -1,10 +1,10 @@
 <?php
 namespace app\index\controller;
 
-use app\common\model\News;
+use app\common\model\News as NewsModel;
 use app\common\model\NewsCategory;
 
-class NewsController extends Base
+class News extends Base
 {
     public function index()
     {
@@ -19,7 +19,7 @@ class NewsController extends Base
         if ($category_id > 0) {
             $where['category_id'] = $category_id;
         }
-        $news_list = News::where($where)->order('is_top', 'desc')->order('create_time', 'desc')->paginate(10, false, [
+        $news_list = NewsModel::where($where)->order('is_top', 'desc')->order('create_time', 'desc')->paginate(10, false, [
             'query' => ['category_id' => $category_id]
         ]);
 
@@ -32,7 +32,7 @@ class NewsController extends Base
     public function detail()
     {
         $id = $this->request->param('id', 0, 'intval');
-        $news = News::get($id);
+        $news = NewsModel::get($id);
         if (!$news || $news->status != 1) {
             $this->error('新闻不存在');
         }
@@ -41,9 +41,9 @@ class NewsController extends Base
         $news->where('id', $id)->setInc('views');
 
         // 上一篇
-        $prev = News::where('status', 1)->where('id', '<', $id)->order('id', 'desc')->find();
+        $prev = NewsModel::where('status', 1)->where('id', '<', $id)->order('id', 'desc')->find();
         // 下一篇
-        $next = News::where('status', 1)->where('id', '>', $id)->order('id', 'asc')->find();
+        $next = NewsModel::where('status', 1)->where('id', '>', $id)->order('id', 'asc')->find();
 
         $this->assign('news', $news);
         $this->assign('prev', $prev);
