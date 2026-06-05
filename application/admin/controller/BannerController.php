@@ -23,9 +23,9 @@ class BannerController extends Base
             }
 
             if (Banner::create($data)) {
-                return $this->successJson('添加成功');
+                return $this->iframeMsg('添加成功', 1, '/admin/banner');
             }
-            return $this->errorJson('添加失败');
+            return $this->iframeMsg('添加失败', 0);
         }
         return $this->fetch();
     }
@@ -45,9 +45,9 @@ class BannerController extends Base
             }
 
             if (Banner::where('id', $id)->update($data) !== false) {
-                return $this->successJson('修改成功');
+                return $this->iframeMsg('修改成功', 1, '/admin/banner');
             }
-            return $this->errorJson('修改失败');
+            return $this->iframeMsg('修改失败', 0);
         }
 
         $banner = Banner::get($id);

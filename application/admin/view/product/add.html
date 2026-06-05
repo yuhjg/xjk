@@ -8,7 +8,7 @@
 <body>
 <div class="content-card form-page">
     <h3 style="font-size:18px;margin-bottom:24px;">添加产品</h3>
-    <form id="productForm" method="post" enctype="multipart/form-data">
+    <form id="productForm" method="post" action="/admin/product/add" enctype="multipart/form-data">
         <div class="form-group">
             <label>产品名称 <span class="req">*</span></label>
             <input type="text" name="title" placeholder="请输入产品名称" required>
@@ -28,12 +28,9 @@
         </div>
         <div class="form-group">
             <label>产品图片</label>
-            <div class="upload-box" id="imageBox">
-                <div class="placeholder">
-                    <div class="icon">📷</div>
-                    <p>点击上传图片</p>
-                </div>
-                <input type="file" name="image" id="imageInput" accept="image/*" onchange="previewImage(this, 'imageBox')">
+            <input type="file" name="image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
+            <div id="imagePreview" style="display:none;margin-top:8px;">
+                <img id="previewImg" src="" style="max-width:200px;max-height:150px;border-radius:4px;border:1px solid #eee;">
             </div>
         </div>
         <div class="form-group">
@@ -69,47 +66,17 @@
         </div>
     </form>
 </div>
-
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-function previewImage(input, boxId) {
-    if (input.files && input.files[0]) {
+// 图片预览 - 不修改DOM结构，只显示预览图
+document.querySelector('input[name="image"]').addEventListener('change', function() {
+    if (this.files && this.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
-            var box = document.getElementById(boxId);
-            // 保留file input，只替换预览图
-            var existingInput = document.getElementById('imageInput');
-            box.innerHTML = '';
-            var img = document.createElement('img');
-            img.src = e.target.result;
-            box.appendChild(img);
-            existingInput.value = input.value;
-            existingInput.files = input.files;
-            box.appendChild(existingInput);
+            document.getElementById('previewImg').src = e.target.result;
+            document.getElementById('imagePreview').style.display = 'block';
         };
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(this.files[0]);
     }
-}
-$('#productForm').on('submit', function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
-    $.ajax({
-        url: '/admin/product/add',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        headers: {'X-Requested-With': 'XMLHttpRequest'},
-        success: function(res) {
-            if (res.code == 1) {
-                alert('添加成功');
-                window.location.href = '/admin/product';
-            } else {
-                alert(res.msg || '添加失败');
-            }
-        },
-        error: function(xhr) { alert('提交失败，请重试'); }
-    });
 });
 </script>
 </body>

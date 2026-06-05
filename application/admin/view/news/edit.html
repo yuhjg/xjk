@@ -8,7 +8,7 @@
 <body>
 <div class="content-card form-page">
     <h3 style="font-size:18px;margin-bottom:24px;">编辑新闻</h3>
-    <form id="newsForm" method="post" enctype="multipart/form-data">
+    <form id="newsForm" method="post" action="/admin/news/edit/{$news.id}" enctype="multipart/form-data">
         <div class="form-group">
             <label>新闻标题 <span class="req">*</span></label>
             <input type="text" name="title" value="{$news.title}" placeholder="请输入新闻标题" required>
@@ -28,17 +28,11 @@
         </div>
         <div class="form-group">
             <label>封面图</label>
-            <div class="upload-box" id="imageBox">
-                {if condition="$news.image"}
-                <img src="{$news.image}" alt="">
-                {else/}
-                <div class="placeholder">
-                    <div class="icon">📷</div>
-                    <p>点击上传图片</p>
-                </div>
-                {/if}
-                <input type="file" name="image" id="imageInput" accept="image/*" onchange="previewImage(this, 'imageBox')">
-            </div>
+            {if condition="$news.image"}
+            <div style="margin-bottom:8px;"><img src="{$news.image}" style="max-width:200px;max-height:150px;border-radius:4px;border:1px solid #eee;"></div>
+            {/if}
+            <input type="file" name="image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
+            <p class="tip">不选择图片则保持原图不变</p>
         </div>
         <div class="form-group">
             <label>摘要</label>
@@ -72,45 +66,5 @@
         </div>
     </form>
 </div>
-
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-function previewImage(input, boxId) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var box = document.getElementById(boxId);
-            var fileInput = input;
-            box.innerHTML = '';
-            var img = document.createElement('img');
-            img.src = e.target.result;
-            box.appendChild(img);
-            box.appendChild(fileInput);
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-$('#newsForm').on('submit', function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
-    $.ajax({
-        url: '/admin/news/edit/{$news.id}',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        headers: {'X-Requested-With': 'XMLHttpRequest'},
-        success: function(res) {
-            if (res.code == 1) {
-                alert('修改成功');
-                window.location.href = '/admin/news';
-            } else {
-                alert(res.msg || '修改失败');
-            }
-        },
-        error: function(xhr) { alert('提交失败，请重试'); }
-    });
-});
-</script>
 </body>
 </html>

@@ -27,14 +27,14 @@ class CompanyController extends Base
             $company = Company::find(1);
             if ($company) {
                 if ($company->save($data) !== false) {
-                    return $this->successJson('保存成功');
+                    return $this->iframeMsg('保存成功', 1, '/admin/company');
                 }
             } else {
                 if (Company::create($data)) {
-                    return $this->successJson('保存成功');
+                    return $this->iframeMsg('保存成功', 1, '/admin/company');
                 }
             }
-            return $this->errorJson('保存失败');
+            return $this->iframeMsg('保存失败', 0);
         }
 
         $company = Company::find(1);

@@ -8,7 +8,7 @@
 <body>
 <div class="content-card form-page">
     <h3 style="font-size:18px;margin-bottom:24px;">添加新闻</h3>
-    <form id="newsForm" method="post" enctype="multipart/form-data">
+    <form id="newsForm" method="post" action="/admin/news/add" enctype="multipart/form-data">
         <div class="form-group">
             <label>新闻标题 <span class="req">*</span></label>
             <input type="text" name="title" placeholder="请输入新闻标题" required>
@@ -28,17 +28,14 @@
         </div>
         <div class="form-group">
             <label>封面图</label>
-            <div class="upload-box" id="imageBox">
-                <div class="placeholder">
-                    <div class="icon">📷</div>
-                    <p>点击上传图片</p>
-                </div>
-                <input type="file" name="image" id="imageInput" accept="image/*" onchange="previewImage(this, 'imageBox')">
+            <input type="file" name="image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
+            <div id="imagePreview" style="display:none;margin-top:8px;">
+                <img id="previewImg" src="" style="max-width:200px;max-height:150px;border-radius:4px;border:1px solid #eee;">
             </div>
         </div>
         <div class="form-group">
             <label>摘要</label>
-            <textarea name="description" placeholder="请输入新闻摘要">{$news.description|default=''}</textarea>
+            <textarea name="description" placeholder="请输入新闻摘要"></textarea>
         </div>
         <div class="form-group">
             <label>新闻内容 <span class="req">*</span></label>
@@ -68,44 +65,16 @@
         </div>
     </form>
 </div>
-
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-function previewImage(input, boxId) {
-    if (input.files && input.files[0]) {
+document.querySelector('input[name="image"]').addEventListener('change', function() {
+    if (this.files && this.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
-            var box = document.getElementById(boxId);
-            var fileInput = input;
-            box.innerHTML = '';
-            var img = document.createElement('img');
-            img.src = e.target.result;
-            box.appendChild(img);
-            box.appendChild(fileInput);
+            document.getElementById('previewImg').src = e.target.result;
+            document.getElementById('imagePreview').style.display = 'block';
         };
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(this.files[0]);
     }
-}
-$('#newsForm').on('submit', function(e) {
-    e.preventDefault();
-    var formData = new FormData(this);
-    $.ajax({
-        url: '/admin/news/add',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        headers: {'X-Requested-With': 'XMLHttpRequest'},
-        success: function(res) {
-            if (res.code == 1) {
-                alert('添加成功');
-                window.location.href = '/admin/news';
-            } else {
-                alert(res.msg || '添加失败');
-            }
-        },
-        error: function(xhr) { alert('提交失败，请重试'); }
-    });
 });
 </script>
 </body>

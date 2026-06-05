@@ -45,7 +45,7 @@ class NewsController extends Base
             ]);
 
             if (true !== $result) {
-                return $this->errorJson($result);
+                return $this->iframeMsg($result, 0);
             }
 
             $image = $this->uploadFile('image', 'news');
@@ -54,9 +54,9 @@ class NewsController extends Base
             }
 
             if (News::create($data)) {
-                return $this->successJson('添加成功');
+                return $this->iframeMsg('添加成功', 1, '/admin/news');
             }
-            return $this->errorJson('添加失败');
+            return $this->iframeMsg('添加失败', 0);
         }
 
         $categories = NewsCategory::where('status', 1)->order('sort', 'asc')->select();
@@ -79,7 +79,7 @@ class NewsController extends Base
             ]);
 
             if (true !== $result) {
-                return $this->errorJson($result);
+                return $this->iframeMsg($result, 0);
             }
 
             $image = $this->uploadFile('image', 'news');
@@ -90,9 +90,9 @@ class NewsController extends Base
             }
 
             if (News::where('id', $id)->update($data) !== false) {
-                return $this->successJson('修改成功');
+                return $this->iframeMsg('修改成功', 1, '/admin/news');
             }
-            return $this->errorJson('修改失败');
+            return $this->iframeMsg('修改失败', 0);
         }
 
         $news = News::get($id);

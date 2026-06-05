@@ -45,7 +45,7 @@ class ProductController extends Base
             ]);
 
             if (true !== $result) {
-                return $this->errorJson($result);
+                return $this->iframeMsg($result, 0);
             }
 
             $image = $this->uploadFile('image', 'product');
@@ -54,9 +54,9 @@ class ProductController extends Base
             }
 
             if (Product::create($data)) {
-                return $this->successJson('添加成功');
+                return $this->iframeMsg('添加成功', 1, '/admin/product');
             }
-            return $this->errorJson('添加失败');
+            return $this->iframeMsg('添加失败', 0);
         }
 
         $categories = ProductCategory::where('status', 1)->order('sort', 'asc')->select();
@@ -79,7 +79,7 @@ class ProductController extends Base
             ]);
 
             if (true !== $result) {
-                return $this->errorJson($result);
+                return $this->iframeMsg($result, 0);
             }
 
             $image = $this->uploadFile('image', 'product');
@@ -90,9 +90,9 @@ class ProductController extends Base
             }
 
             if (Product::where('id', $id)->update($data) !== false) {
-                return $this->successJson('修改成功');
+                return $this->iframeMsg('修改成功', 1, '/admin/product');
             }
-            return $this->errorJson('修改失败');
+            return $this->iframeMsg('修改失败', 0);
         }
 
         $product = Product::get($id);
