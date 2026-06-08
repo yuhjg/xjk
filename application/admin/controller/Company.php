@@ -24,6 +24,13 @@ class Company extends Base
                 unset($data['wechat_qrcode']);
             }
 
+            $companyImage = $this->uploadFile('company_image', 'company');
+            if ($companyImage) {
+                $data['company_image'] = $companyImage;
+            } else {
+                unset($data['company_image']);
+            }
+
             $company = CompanyModel::find(1);
             if ($company) {
                 if ($company->save($data) !== false) {

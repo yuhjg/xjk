@@ -112,6 +112,7 @@ CREATE TABLE `xjk_company` (
   `qq` varchar(30) NOT NULL DEFAULT '' COMMENT 'QQ',
   `wechat` varchar(50) NOT NULL DEFAULT '' COMMENT '微信号',
   `wechat_qrcode` varchar(255) NOT NULL DEFAULT '' COMMENT '微信二维码',
+  `company_image` varchar(255) NOT NULL DEFAULT '' COMMENT '公司形象图',
   `icp` varchar(50) NOT NULL DEFAULT '' COMMENT '备案号',
   `copyright` varchar(100) NOT NULL DEFAULT '' COMMENT '版权信息',
   `intro` text COMMENT '公司简介',
@@ -194,3 +195,23 @@ INSERT INTO `xjk_banner` (`id`, `title`, `subtitle`, `image`, `link`, `sort`, `s
 (1, '专业电源适配器制造商', '十余年行业经验 · 品质值得信赖', '', '', 1, 1, UNIX_TIMESTAMP()),
 (2, '品质铸就品牌', '通过CCC/CE/FCC/UL等多项国际认证', '', '', 2, 1, UNIX_TIMESTAMP()),
 (3, '创新驱动发展', '持续研发投入 · 技术引领行业', '', '', 3, 1, UNIX_TIMESTAMP());
+
+-- -------------------------------------------
+-- 图片管理表
+-- -------------------------------------------
+DROP TABLE IF EXISTS `xjk_image`;
+CREATE TABLE `xjk_image` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL DEFAULT '' COMMENT '图片标题',
+  `category` varchar(50) NOT NULL DEFAULT '' COMMENT '图片分类',
+  `image` varchar(255) NOT NULL DEFAULT '' COMMENT '图片路径',
+  `link` varchar(255) NOT NULL DEFAULT '' COMMENT '链接地址',
+  `description` varchar(500) NOT NULL DEFAULT '' COMMENT '图片描述',
+  `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态:1显示,0隐藏',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_category` (`category`),
+  KEY `idx_sort` (`sort`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片管理表';

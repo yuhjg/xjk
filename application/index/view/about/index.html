@@ -16,7 +16,11 @@
                 {$company.intro|raw|default=''}
             </div>
             <div class="about-image">
+                {if condition="$company && $company.company_image"}
+                <img src="{$company.company_image}" alt="公司形象" style="width:100%;height:100%;object-fit:cover;">
+                {else/}
                 <span class="no-img">公司形象</span>
+                {/if}
             </div>
         </div>
     </div>

@@ -12,7 +12,13 @@
     <!-- Header -->
     <header class="header">
         <div class="container">
-            <a href="/" class="logo">鑫聚康<span>电子</span></a>
+            <a href="/" class="logo">
+                {if condition="$company && $company.logo"}
+                <img src="{$company.logo}" alt="{$company.short_name|default='鑫聚康'}" class="logo-img">
+                {else/}
+                鑫聚康<span>电子</span>
+                {/if}
+            </a>
             <nav class="nav" id="mainNav">
                 <a href="/" class="{$current_controller=='index'?'active':''}">首页</a>
                 <a href="/about" class="{$current_controller=='about'?'active':''}">关于我们</a>

@@ -69,4 +69,12 @@ Route::post('admin/message/delete', 'admin/Message/delete');
 Route::post('admin/message/setRead', 'admin/Message/setRead');
 Route::get('admin/message', 'admin/Message/index');
 
+// 后台图片管理
+Route::get('admin/image/add', 'admin/Image/add');
+Route::post('admin/image/add', 'admin/Image/add');
+Route::get('admin/image/edit/:id', 'admin/Image/edit');
+Route::post('admin/image/edit/:id', 'admin/Image/edit');
+Route::post('admin/image/delete', 'admin/Image/delete');
+Route::get('admin/image', 'admin/Image/index');
+
 return [];
