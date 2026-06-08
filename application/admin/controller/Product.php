@@ -61,8 +61,8 @@ class Product extends Base
             return $this->iframeMsg('添加失败', 0);
         }
 
-        $categories = ProductCategory::where('status', 1)->order('sort', 'asc')->order('parent_id', 'asc')->select();
-        $this->assign('categories', $categories);
+        $categoryTree = ProductCategory::getCategoryTree();
+        $this->assign('categoryTree', $categoryTree);
         return $this->fetch();
     }
 
@@ -102,9 +102,9 @@ class Product extends Base
             $this->error('产品不存在');
         }
 
-        $categories = ProductCategory::where('status', 1)->order('sort', 'asc')->order('parent_id', 'asc')->select();
+        $categoryTree = ProductCategory::getCategoryTree();
         $this->assign('product', $product);
-        $this->assign('categories', $categories);
+        $this->assign('categoryTree', $categoryTree);
         return $this->fetch();
     }
 
