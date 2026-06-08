@@ -7,13 +7,15 @@
         <div class="banner-slide {if condition='$i==1'}active{/if}">
             {if condition="$banner.image"}
             <img src="{$banner.image}" alt="{$banner.title}" class="banner-img">
-            {/if}
+            {else/}
+            <div class="banner-default-bg"></div>
             <div class="banner-overlay"></div>
             <div class="banner-content">
                 <h2>{$banner.title}</h2>
                 <p>{$banner.subtitle}</p>
                 <a href="{$banner.link|default='/product'}" class="btn-primary">了解产品</a>
             </div>
+            {/if}
         </div>
         {/volist}
     </div>
