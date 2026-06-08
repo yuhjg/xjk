@@ -145,6 +145,35 @@ img { max-width: 100%; vertical-align: middle; }
 .category-tabs a { padding: 8px 20px; border-radius: 20px; border: 1px solid #ddd; font-size: 14px; color: #666; transition: all 0.3s; }
 .category-tabs a:hover, .category-tabs a.active { background: #1a5ca1; color: #fff; border-color: #1a5ca1; }
 
+/* ==================== Product Page Layout ==================== */
+.product-page-layout { display: grid; grid-template-columns: 240px 1fr; gap: 30px; align-items: start; }
+.product-sidebar { position: sticky; top: 90px; }
+.sidebar-category { background: #fff; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
+.sidebar-category h3 { background: #1a5ca1; color: #fff; padding: 16px 20px; font-size: 16px; }
+.category-tree { padding: 8px 0; }
+.category-tree > li { border-bottom: 1px solid #f5f5f5; }
+.category-tree > li:last-child { border-bottom: none; }
+.category-tree > li > a, .category-tree > li:first-child > a { display: block; padding: 12px 20px; font-size: 15px; color: #333; transition: all 0.3s; font-weight: 500; }
+.category-tree > li > a:hover, .category-tree > li.active > a { color: #1a5ca1; background: #f0f6ff; }
+.category-tree > li.active > a { border-left: 3px solid #1a5ca1; }
+.cat-children { background: #fafbfc; }
+.cat-children li { border-top: 1px solid #f0f0f0; }
+.cat-children li a { display: block; padding: 10px 20px 10px 40px; font-size: 14px; color: #666; transition: all 0.3s; position: relative; }
+.cat-children li a::before { content: '└'; position: absolute; left: 24px; color: #ccc; }
+.cat-children li a:hover, .category-tree .cat-children li.active a { color: #1a5ca1; background: #f0f6ff; }
+.category-tree .cat-children li.active a { color: #1a5ca1; font-weight: 500; }
+.product-main { min-width: 0; }
+.product-main-header { margin-bottom: 24px; }
+.product-main-header h2 { font-size: 24px; color: #1a5ca1; }
+/* 详情页侧边栏分类树 */
+.category-tree-sm > li { margin-bottom: 8px; }
+.category-tree-sm > li > a { font-size: 14px; color: #333; }
+.category-tree-sm > li > a:hover { color: #1a5ca1; }
+.category-tree-sm > li > ul { padding-left: 16px; margin-top: 4px; }
+.category-tree-sm > li > ul li { margin-bottom: 4px; }
+.category-tree-sm > li > ul li a { font-size: 13px; color: #888; }
+.category-tree-sm > li > ul li a:hover { color: #1a5ca1; }
+
 /* ==================== Responsive ==================== */
 @media (max-width: 1024px) {
     .product-grid { grid-template-columns: repeat(3, 1fr); }
@@ -167,6 +196,8 @@ img { max-width: 100%; vertical-align: middle; }
     .stats { grid-template-columns: repeat(2, 1fr); }
     .contact-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
+    .product-page-layout { grid-template-columns: 1fr; }
+    .product-sidebar { position: static; }
 }
 @media (max-width: 480px) {
     .product-grid { grid-template-columns: 1fr; }

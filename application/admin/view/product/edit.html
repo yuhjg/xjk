@@ -15,10 +15,10 @@
         </div>
         <div class="form-group">
             <label>产品分类 <span class="req">*</span></label>
-            <select name="category_id" required>
+            <select name="category_id" id="categorySelect" required>
                 <option value="">请选择分类</option>
                 {volist name="categories" id="cat"}
-                <option value="{$cat.id}" {if condition="$product['category_id']==$cat['id']"}selected{/if}>{$cat.name}</option>
+                <option value="{$cat.id}" data-parent="{$cat.parent_id|default=0}" {if condition="$product['category_id']==$cat['id']"}selected{/if}>{$cat.name}</option>
                 {/volist}
             </select>
         </div>
@@ -66,5 +66,22 @@
         </div>
     </form>
 </div>
+<script>
+// 二级分类分组显示
+(function() {
+    var sel = document.getElementById('categorySelect');
+    if (!sel) return;
+    var opts = sel.querySelectorAll('option');
+    opts.forEach(function(opt) {
+        var pid = opt.getAttribute('data-parent');
+        if (pid && pid !== '0') {
+            var parentOpt = sel.querySelector('option[value="' + pid + '"]');
+            if (parentOpt) {
+                opt.text = '　└ ' + opt.text;
+            }
+        }
+    });
+})();
+</script>
 </body>
 </html>

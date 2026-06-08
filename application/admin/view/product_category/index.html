@@ -19,30 +19,50 @@
             <tr>
                 <th width="60">ID</th>
                 <th>分类名称</th>
+                <th width="100">层级</th>
                 <th width="80">排序</th>
                 <th width="80">状态</th>
-                <th width="160">操作</th>
+                <th width="200">操作</th>
             </tr>
         </thead>
         <tbody>
-            {volist name="categories" id="cat"}
-            <tr>
+            {volist name="topCategories" id="cat"}
+            <tr style="background:#fafbfc;">
                 <td>{$cat.id}</td>
-                <td>{$cat.name}</td>
+                <td><strong>{$cat.name}</strong></td>
+                <td><span class="status-tag on">一级分类</span></td>
                 <td>{$cat.sort}</td>
                 <td>{if condition="$cat.status==1"}<span class="status-tag on">启用</span>{else/}<span class="status-tag off">禁用</span>{/if}</td>
                 <td>
                     <div class="actions">
+                        <a href="/admin/product_category/add?parent_id={$cat.id}" class="btn btn-success btn-sm" target="mainFrame">+子分类</a>
                         <a href="/admin/product_category/edit/{$cat.id}" class="btn btn-primary btn-sm" target="mainFrame">编辑</a>
                         <button onclick="deleteCat({$cat.id})" class="btn btn-danger btn-sm">删除</button>
                     </div>
                 </td>
             </tr>
+            {volist name="cat.children_list" id="child"}
+            <tr>
+                <td>{$child.id}</td>
+                <td style="padding-left:40px;color:#666;">└ {$child.name}</td>
+                <td><span class="status-tag" style="background:#fff3e0;color:#f57c00;">二级分类</span></td>
+                <td>{$child.sort}</td>
+                <td>{if condition="$child.status==1"}<span class="status-tag on">启用</span>{else/}<span class="status-tag off">禁用</span>{/if}</td>
+                <td>
+                    <div class="actions">
+                        <a href="/admin/product_category/edit/{$child.id}" class="btn btn-primary btn-sm" target="mainFrame">编辑</a>
+                        <button onclick="deleteCat({$child.id})" class="btn btn-danger btn-sm">删除</button>
+                    </div>
+                </td>
+            </tr>
             {/volist}
+            {/volist}
+
+            {empty name="topCategories"}
+            <tr><td colspan="6" style="text-align:center;color:#999;padding:40px;">暂无分类，请添加</td></tr>
+            {/empty}
         </tbody>
     </table>
-
-    <div class="pagination">{$categories|raw}</div>
 </div>
 
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

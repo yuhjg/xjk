@@ -34,9 +34,17 @@
             <div class="detail-sidebar">
                 <div class="sidebar-box">
                     <h3>产品分类</h3>
-                    <ul>
-                        {volist name="nav_categories" id="cat"}
-                        <li><a href="/product?category_id={$cat.id}">{$cat.name}</a></li>
+                    <ul class="category-tree-sm">
+                        {volist name="categoryTree" id="cat"}
+                        <li><a href="/product?category_id={$cat.id}"><strong>{$cat.name}</strong></a>
+                            {if condition="$cat.children_list"}
+                            <ul>
+                                {volist name="cat.children_list" id="child"}
+                                <li><a href="/product?category_id={$child.id}">{$child.name}</a></li>
+                                {/volist}
+                            </ul>
+                            {/if}
+                        </li>
                         {/volist}
                     </ul>
                 </div>

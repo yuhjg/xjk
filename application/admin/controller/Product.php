@@ -16,14 +16,16 @@ class Product extends Base
             $query->where('title', 'like', '%' . $keyword . '%');
         }
         if ($category_id > 0) {
-            $query->where('category_id', $category_id);
+            // 支持按一级分类筛选（包含其子分类的产品）
+            $categoryIds = ProductCategory::getCategoryIdsWithChildren($category_id);
+            $query->whereIn('category_id', $categoryIds);
         }
 
         $products = $query->order('sort', 'asc')->order('id', 'desc')->paginate(15, false, [
             'query' => ['keyword' => $keyword, 'category_id' => $category_id]
         ]);
 
-        $categories = ProductCategory::where('status', 1)->order('sort', 'asc')->select();
+        $categories = ProductCategory::where('status', 1)->order('sort', 'asc')->order('parent_id', 'asc')->select();
 
         $this->assign('products', $products);
         $this->assign('categories', $categories);
@@ -59,7 +61,7 @@ class Product extends Base
             return $this->iframeMsg('添加失败', 0);
         }
 
-        $categories = ProductCategory::where('status', 1)->order('sort', 'asc')->select();
+        $categories = ProductCategory::where('status', 1)->order('sort', 'asc')->order('parent_id', 'asc')->select();
         $this->assign('categories', $categories);
         return $this->fetch();
     }
@@ -100,7 +102,7 @@ class Product extends Base
             $this->error('产品不存在');
         }
 
-        $categories = ProductCategory::where('status', 1)->order('sort', 'asc')->select();
+        $categories = ProductCategory::where('status', 1)->order('sort', 'asc')->order('parent_id', 'asc')->select();
         $this->assign('product', $product);
         $this->assign('categories', $categories);
         return $this->fetch();

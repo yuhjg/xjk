@@ -29,12 +29,14 @@ INSERT INTO `xjk_admin` VALUES (1, 'admin', '0192023a7bbd7b501b7c5f3c6e4e6e6e', 
 DROP TABLE IF EXISTS `xjk_product_category`;
 CREATE TABLE `xjk_product_category` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '父分类ID:0为一级分类',
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT '分类名称',
   `sort` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '排序(越小越靠前)',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态:1启用,0禁用',
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_parent` (`parent_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品分类表';
 
 -- -------------------------------------------
@@ -160,11 +162,17 @@ CREATE TABLE `xjk_banner` (
 -- ============================================
 
 -- 产品分类
-INSERT INTO `xjk_product_category` (`id`, `name`, `sort`, `status`, `create_time`) VALUES
-(1, '开关电源适配器', 1, 1, UNIX_TIMESTAMP()),
-(2, '线性电源适配器', 2, 1, UNIX_TIMESTAMP()),
-(3, 'USB电源适配器', 3, 1, UNIX_TIMESTAMP()),
-(4, '车载电源适配器', 4, 1, UNIX_TIMESTAMP());
+INSERT INTO `xjk_product_category` (`id`, `parent_id`, `name`, `sort`, `status`, `create_time`) VALUES
+(1, 0, '开关电源适配器', 1, 1, UNIX_TIMESTAMP()),
+(2, 0, '线性电源适配器', 2, 1, UNIX_TIMESTAMP()),
+(3, 0, 'USB电源适配器', 3, 1, UNIX_TIMESTAMP()),
+(4, 0, '车载电源适配器', 4, 1, UNIX_TIMESTAMP()),
+(5, 1, '12V系列', 1, 1, UNIX_TIMESTAMP()),
+(6, 1, '24V系列', 2, 1, UNIX_TIMESTAMP()),
+(7, 1, '5V系列', 3, 1, UNIX_TIMESTAMP()),
+(8, 2, '9V系列', 1, 1, UNIX_TIMESTAMP()),
+(9, 3, '5V USB系列', 1, 1, UNIX_TIMESTAMP()),
+(10, 4, '12V车载系列', 1, 1, UNIX_TIMESTAMP());
 
 -- 示例产品
 INSERT INTO `xjk_product` (`id`, `category_id`, `title`, `subtitle`, `image`, `description`, `sort`, `status`, `is_recommend`, `create_time`) VALUES
