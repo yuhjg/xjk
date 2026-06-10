@@ -46,6 +46,16 @@
     </footer>
 
     <script>
+    // 分类折叠/展开
+    function toggleCat(el) {
+        var li = el.parentElement;
+        if (li.classList.contains('collapsed')) {
+            li.classList.remove('collapsed');
+        } else {
+            li.classList.add('collapsed');
+        }
+    }
+
     // Banner轮播
     (function() {
         var slides = document.querySelectorAll('.banner-slide');
