@@ -49,6 +49,7 @@ CREATE TABLE `xjk_product` (
   `title` varchar(200) NOT NULL DEFAULT '' COMMENT '产品名称',
   `subtitle` varchar(200) NOT NULL DEFAULT '' COMMENT '产品副标题',
   `image` varchar(255) NOT NULL DEFAULT '' COMMENT '产品图片',
+  `images` text COMMENT '产品多图(JSON,最多5张)',
   `description` text COMMENT '产品描述',
   `content` text COMMENT '产品详情(富文本)',
   `sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',

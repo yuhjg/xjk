@@ -55,6 +55,12 @@ class Product extends Base
                 $data['image'] = $image;
             }
 
+            // 处理多图上传（最多5张）
+            $images = $this->uploadMultiImages('images', 'product', 5);
+            if (!empty($images)) {
+                $data['images'] = json_encode($images, JSON_UNESCAPED_SLASHES);
+            }
+
             if (ProductModel::create($data)) {
                 return $this->iframeMsg('添加成功', 1, '/admin/product');
             }
@@ -91,6 +97,47 @@ class Product extends Base
                 unset($data['image']);
             }
 
+            // 处理多图上传
+            // 1. 获取已有的多图
+            $product = ProductModel::get($id);
+            $existImages = [];
+            if ($product && $product->images) {
+                $decoded = json_decode($product->images, true);
+                if (is_array($decoded)) {
+                    $existImages = $decoded;
+                }
+            }
+
+            // 2. 获取表单中标记删除的图片索引
+            $removeIndexes = $this->request->post('remove_images', '');
+            if ($removeIndexes) {
+                $removeArr = explode(',', $removeIndexes);
+                foreach ($removeArr as $idx) {
+                    $idx = intval($idx);
+                    if (isset($existImages[$idx])) {
+                        unset($existImages[$idx]);
+                    }
+                }
+                // 重新索引
+                $existImages = array_values($existImages);
+            }
+
+            // 3. 上传新的多图
+            $newImages = $this->uploadMultiImages('images', 'product', 5);
+            if (!empty($newImages)) {
+                $existImages = array_merge($existImages, $newImages);
+            }
+
+            // 4. 最多保留5张
+            $existImages = array_slice($existImages, 0, 5);
+
+            // 5. 如果主图没设，取多图第一张
+            if (empty($data['image']) && !empty($existImages) && empty($product->image)) {
+                $data['image'] = $existImages[0];
+            }
+
+            $data['images'] = json_encode($existImages, JSON_UNESCAPED_SLASHES);
+
             if (ProductModel::where('id', $id)->update($data) !== false) {
                 return $this->iframeMsg('修改成功', 1, '/admin/product');
             }
@@ -126,5 +173,57 @@ class Product extends Base
             return $this->successJson('操作成功');
         }
         return $this->errorJson('操作失败');
+    }
+
+    /**
+     * 批量上传图片（最多$max张）
+     * @param string $fieldName 表单字段名
+     * @param string $subDir 子目录
+     * @param int $max 最大数量
+     * @return array 上传成功的图片路径数组
+     */
+    protected function uploadMultiImages($fieldName, $subDir = 'product', $max = 5)
+    {
+        $images = [];
+        if (empty($_FILES[$fieldName])) {
+            return $images;
+        }
+
+        $files = $_FILES[$fieldName];
+        $count = is_array($files['name']) ? count($files['name']) : 0;
+
+        for ($i = 0; $i < $count && $i < $max; $i++) {
+            if ($files['error'][$i] !== 0) {
+                continue;
+            }
+
+            $tmpName = $files['tmp_name'][$i];
+            $originName = $files['name'][$i];
+
+            if (!is_uploaded_file($tmpName)) {
+                continue;
+            }
+
+            $ext = strtolower(pathinfo($originName, PATHINFO_EXTENSION));
+            $allowExt = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'];
+            if (!in_array($ext, $allowExt)) {
+                $ext = 'jpg';
+            }
+
+            $dateDir = date('Ymd');
+            $saveDir = './uploads/' . $subDir . '/' . $dateDir;
+            if (!is_dir($saveDir)) {
+                mkdir($saveDir, 0777, true);
+            }
+
+            $fileName = md5(microtime(true) . mt_rand(1000, 9999) . $i) . '.' . $ext;
+            $destPath = $saveDir . '/' . $fileName;
+
+            if (move_uploaded_file($tmpName, $destPath)) {
+                $images[] = '/uploads/' . $subDir . '/' . $dateDir . '/' . $fileName;
+            }
+        }
+
+        return $images;
     }
 }

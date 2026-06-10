@@ -11,11 +11,6 @@
     <div class="container">
         <div class="detail-content">
             <div class="detail-main">
-                {if condition="$product.image"}
-                <div style="text-align:center;margin-bottom:30px;">
-                    <img src="{$product.image}" alt="{$product.title}" style="max-height:400px;">
-                </div>
-                {/if}
                 <h1>{$product.title}</h1>
                 <div class="meta">
                     分类：{$product.category_name|default='电源适配器'} | 发布时间：{$product.create_time|date='Y-m-d'}
@@ -23,11 +18,35 @@
                 {if condition="$product.subtitle"}
                 <p style="font-size:16px;color:#1a5ca1;margin-bottom:20px;">{$product.subtitle}</p>
                 {/if}
-                <div class="body">
+
+                <!-- 产品图片展示 -->
+                {if condition="count($productImages) > 0"}
+                <div class="product-gallery">
+                    <div class="gallery-main">
+                        <img id="galleryMainImg" src="{$productImages[0]}" alt="{$product.title}">
+                    </div>
+                    {if condition="count($productImages) > 1"}
+                    <div class="gallery-thumbs">
+                        {volist name="productImages" id="img" key="k"}
+                        <div class="gallery-thumb {if condition='$k==0'}active{/if}" onclick="switchGalleryImg(this, '{$img}')">
+                            <img src="{$img}" alt="{$product.title} 图{$k+1}">
+                        </div>
+                        {/volist}
+                    </div>
+                    {/if}
+                </div>
+                {/if}
+
+                {if condition="$product.description"}
+                <div class="product-desc">
+                    <h3>产品描述</h3>
+                    <p>{$product.description}</p>
+                </div>
+                {/if}
+
+                <div class="product-detail-body">
                     {if condition="$product.content"}
                     {$product.content|raw}
-                    {else/}
-                    <p>{$product.description|default='暂无详细描述'}</p>
                     {/if}
                 </div>
             </div>

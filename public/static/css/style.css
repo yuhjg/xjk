@@ -213,6 +213,26 @@ img { max-width: 100%; vertical-align: middle; }
 .category-tree-sm > li > ul li a { font-size: 13px; color: #888; }
 .category-tree-sm > li > ul li a:hover { color: #1a5ca1; }
 
+/* ==================== Product Gallery ==================== */
+.product-gallery { margin-bottom: 30px; }
+.gallery-main { width: 100%; height: 450px; background: #f5f8fc; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; border: 1px solid #eee; }
+.gallery-main img { max-width: 100%; max-height: 100%; object-fit: contain; transition: opacity 0.2s; }
+.gallery-thumbs { display: flex; gap: 10px; }
+.gallery-thumb { width: 80px; height: 80px; border-radius: 6px; overflow: hidden; cursor: pointer; border: 2px solid #eee; transition: border-color 0.3s; flex-shrink: 0; background: #f5f8fc; display: flex; align-items: center; justify-content: center; }
+.gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.gallery-thumb:hover { border-color: #1a5ca1; }
+.gallery-thumb.active { border-color: #1a5ca1; box-shadow: 0 0 0 2px rgba(26,92,161,0.2); }
+
+/* 产品描述区域 */
+.product-desc { margin-bottom: 30px; padding: 24px; background: #f8fbff; border-radius: 8px; }
+.product-desc h3 { font-size: 18px; color: #1a5ca1; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid #e8f0fe; }
+.product-desc p { font-size: 15px; color: #555; line-height: 1.8; }
+
+/* 产品详情内容 */
+.product-detail-body { font-size: 15px; line-height: 1.8; color: #555; }
+.product-detail-body p { margin-bottom: 16px; }
+.product-detail-body img { max-width: 100%; border-radius: 4px; }
+
 /* ==================== Responsive ==================== */
 @media (max-width: 1024px) {
     .product-grid { grid-template-columns: repeat(3, 1fr); }
@@ -230,6 +250,8 @@ img { max-width: 100%; vertical-align: middle; }
     .section { padding: 50px 0; }
     .section-header h2 { font-size: 24px; }
     .product-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .gallery-main { height: 300px; }
+    .gallery-thumb { width: 60px; height: 60px; }
     .news-list { grid-template-columns: 1fr; }
     .about-content { grid-template-columns: 1fr; }
     .stats { grid-template-columns: repeat(2, 1fr); }

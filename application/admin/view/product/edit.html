@@ -30,12 +30,22 @@
             <input type="text" name="subtitle" value="{$product.subtitle|default=''}" placeholder="请输入产品副标题">
         </div>
         <div class="form-group">
-            <label>产品图片</label>
+            <label>产品图片（主图）</label>
             {if condition="$product.image"}
             <div style="margin-bottom:8px;"><img src="{$product.image}" style="max-width:200px;max-height:150px;border-radius:4px;border:1px solid #eee;"></div>
             {/if}
             <input type="file" name="image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
             <p class="tip">不选择图片则保持原图不变</p>
+        </div>
+        <div class="form-group">
+            <label>产品多图（最多5张）</label>
+            <input type="hidden" name="remove_images" id="removeImages" value="">
+            <div id="multiImageUpload">
+                <div class="multi-img-row" style="display:flex;gap:10px;flex-wrap:wrap;" id="imageContainer">
+                    <!-- 已有图片和新增图片由JS动态渲染 -->
+                </div>
+                <p class="tip">点击×删除已有图片，点击+号添加新图片，最多5张。</p>
+            </div>
         </div>
         <div class="form-group">
             <label>产品描述</label>
@@ -69,5 +79,95 @@
         </div>
     </form>
 </div>
+<script>
+// 已有图片数据（从PHP传过来）
+{php}
+$existImgArr = [];
+if (!empty($product['images'])) {
+    $decoded = json_decode($product['images'], true);
+    if (is_array($decoded)) {
+        $existImgArr = $decoded;
+    }
+}
+echo 'var existImages = ' . json_encode($existImgArr) . ';';
+{/php}
+
+var removedIndexes = [];
+var maxImages = 5;
+
+function renderImageSlots() {
+    var container = document.getElementById('imageContainer');
+    container.innerHTML = '';
+
+    // 渲染已有图片
+    existImages.forEach(function(src, idx) {
+        if (removedIndexes.indexOf(idx) >= 0) return;
+        var div = document.createElement('div');
+        div.style.cssText = 'width:100px;height:100px;border:2px solid #1a5ca1;border-radius:6px;position:relative;overflow:hidden;';
+        div.innerHTML = '<img src="' + src + '" style="width:100%;height:100%;object-fit:cover;">' +
+            '<span onclick="removeExistImg(' + idx + ')" style="position:absolute;top:2px;right:4px;background:rgba(255,0,0,0.7);color:#fff;width:18px;height:18px;border-radius:50%;text-align:center;line-height:16px;cursor:pointer;font-size:14px;">×</span>';
+        container.appendChild(div);
+    });
+
+    // 计算剩余可添加数量
+    var currentCount = existImages.length - removedIndexes.length;
+    var remainSlots = maxImages - currentCount;
+
+    // 渲染空位
+    for (var i = 0; i < remainSlots; i++) {
+        var div = document.createElement('div');
+        div.style.cssText = 'width:100px;height:100px;border:2px dashed #ddd;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;';
+        div.innerHTML = '<span style="color:#bbb;font-size:24px;">+</span>';
+
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.name = 'images[]';
+        input.accept = 'image/jpeg,image/png,image/gif,image/bmp,image/webp';
+        input.style.display = 'none';
+        input.dataset.slotIndex = i;
+        input.addEventListener('change', function() { previewNewImg(this); });
+
+        div.appendChild(input);
+        div.addEventListener('click', function() {
+            this.querySelector('input[type=file]').click();
+        });
+        container.appendChild(div);
+    }
+}
+
+function removeExistImg(idx) {
+    if (removedIndexes.indexOf(idx) < 0) {
+        removedIndexes.push(idx);
+    }
+    document.getElementById('removeImages').value = removedIndexes.join(',');
+    renderImageSlots();
+}
+
+function previewNewImg(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var item = input.parentElement;
+            item.style.borderStyle = 'solid';
+            item.style.borderColor = '#28a745';
+            item.innerHTML = '<img src="' + e.target.result + '" style="width:100%;height:100%;object-fit:cover;">';
+            item.appendChild(input);
+            item.onclick = null;
+            var btn = document.createElement('span');
+            btn.innerHTML = '×';
+            btn.style.cssText = 'position:absolute;top:2px;right:4px;background:rgba(255,0,0,0.7);color:#fff;width:18px;height:18px;border-radius:50%;text-align:center;line-height:16px;cursor:pointer;font-size:14px;';
+            btn.onclick = function(e) {
+                e.stopPropagation();
+                renderImageSlots();
+            };
+            item.appendChild(btn);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// 初始化渲染
+renderImageSlots();
+</script>
 </body>
 </html>
