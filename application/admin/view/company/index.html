@@ -20,7 +20,7 @@
         </div>
         <div class="form-group">
             <label>公司Logo</label>
-            {if condition="$company && $company.logo"}
+            {if condition="$company && $company['logo']"}
             <div style="margin-bottom:8px;"><img src="{$company.logo}" style="max-width:150px;max-height:80px;border-radius:4px;border:1px solid #eee;"></div>
             {/if}
             <input type="file" name="logo" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
@@ -28,7 +28,7 @@
         </div>
         <div class="form-group">
             <label>公司形象图</label>
-            {if condition="$company && $company.company_image"}
+            {if condition="$company && $company['company_image']"}
             <div style="margin-bottom:8px;"><img src="{$company.company_image}" style="max-width:400px;max-height:200px;border-radius:4px;border:1px solid #eee;"></div>
             {/if}
             <input type="file" name="company_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
@@ -36,7 +36,7 @@
         </div>
         <div class="form-group">
             <label>微信二维码</label>
-            {if condition="$company && $company.wechat_qrcode"}
+            {if condition="$company && $company['wechat_qrcode']"}
             <div style="margin-bottom:8px;"><img src="{$company.wechat_qrcode}" style="max-width:150px;max-height:150px;border-radius:4px;border:1px solid #eee;"></div>
             {/if}
             <input type="file" name="wechat_qrcode" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
@@ -72,33 +72,107 @@
         <div style="margin-top:30px;padding-top:20px;border-top:2px solid #1a5ca1;">
             <h3 style="font-size:16px;color:#1a5ca1;margin-bottom:20px;">📊 统计数据设置</h3>
             <p class="tip" style="margin-bottom:16px;">设置首页和关于我们页面展示的统计数据。如上传图片则显示图片，否则显示数字。</p>
-            {for start="1" end="4" name="i"}
+
             <div style="background:#f8fbff;padding:20px;border-radius:8px;margin-bottom:16px;">
-                <h4 style="font-size:14px;color:#333;margin-bottom:12px;">统计项 {$i}</h4>
+                <h4 style="font-size:14px;color:#333;margin-bottom:12px;">统计项 1</h4>
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
                     <div>
                         <label style="font-size:13px;">数值</label>
-                        <input type="text" name="stat{$i}_value" value="{$company['stat'.$i.'_value']|default=''}">
+                        <input type="text" name="stat1_value" value="{$company.stat1_value|default='14'}">
                     </div>
                     <div>
                         <label style="font-size:13px;">后缀</label>
-                        <input type="text" name="stat{$i}_suffix" value="{$company['stat'.$i.'_suffix']|default=''}">
+                        <input type="text" name="stat1_suffix" value="{$company.stat1_suffix|default='+'}">
                     </div>
                     <div>
                         <label style="font-size:13px;">标签</label>
-                        <input type="text" name="stat{$i}_label" value="{$company['stat'.$i.'_label']|default=''}">
+                        <input type="text" name="stat1_label" value="{$company.stat1_label|default='行业经验（年）'}">
                     </div>
                 </div>
                 <div style="margin-top:10px;">
                     <label style="font-size:13px;">统计图片（替代数字显示）</label>
-                    {php}$si={$i};$simg='stat'.$si.'_image';{/php}
-                    {if condition="$company && $company[$simg]"}
-                    <div style="margin-bottom:8px;"><img src="{$company[$simg]}" style="max-width:200px;max-height:100px;border-radius:4px;border:1px solid #eee;"></div>
+                    {if condition="$company && $company['stat1_image']"}
+                    <div style="margin-bottom:8px;"><img src="{$company.stat1_image}" style="max-width:200px;max-height:100px;border-radius:4px;border:1px solid #eee;"></div>
                     {/if}
-                    <input type="file" name="stat{$i}_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
+                    <input type="file" name="stat1_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
+                    <p class="tip">上传图片后，前端将显示图片替代数字文字</p>
                 </div>
             </div>
-            {/for}
+
+            <div style="background:#f8fbff;padding:20px;border-radius:8px;margin-bottom:16px;">
+                <h4 style="font-size:14px;color:#333;margin-bottom:12px;">统计项 2</h4>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+                    <div>
+                        <label style="font-size:13px;">数值</label>
+                        <input type="text" name="stat2_value" value="{$company.stat2_value|default='200'}">
+                    </div>
+                    <div>
+                        <label style="font-size:13px;">后缀</label>
+                        <input type="text" name="stat2_suffix" value="{$company.stat2_suffix|default='+'}">
+                    </div>
+                    <div>
+                        <label style="font-size:13px;">标签</label>
+                        <input type="text" name="stat2_label" value="{$company.stat2_label|default='产品种类'}">
+                    </div>
+                </div>
+                <div style="margin-top:10px;">
+                    <label style="font-size:13px;">统计图片（替代数字显示）</label>
+                    {if condition="$company && $company['stat2_image']"}
+                    <div style="margin-bottom:8px;"><img src="{$company.stat2_image}" style="max-width:200px;max-height:100px;border-radius:4px;border:1px solid #eee;"></div>
+                    {/if}
+                    <input type="file" name="stat2_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
+                </div>
+            </div>
+
+            <div style="background:#f8fbff;padding:20px;border-radius:8px;margin-bottom:16px;">
+                <h4 style="font-size:14px;color:#333;margin-bottom:12px;">统计项 3</h4>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+                    <div>
+                        <label style="font-size:13px;">数值</label>
+                        <input type="text" name="stat3_value" value="{$company.stat3_value|default='500'}">
+                    </div>
+                    <div>
+                        <label style="font-size:13px;">后缀</label>
+                        <input type="text" name="stat3_suffix" value="{$company.stat3_suffix|default='+'}">
+                    </div>
+                    <div>
+                        <label style="font-size:13px;">标签</label>
+                        <input type="text" name="stat3_label" value="{$company.stat3_label|default='服务客户'}">
+                    </div>
+                </div>
+                <div style="margin-top:10px;">
+                    <label style="font-size:13px;">统计图片（替代数字显示）</label>
+                    {if condition="$company && $company['stat3_image']"}
+                    <div style="margin-bottom:8px;"><img src="{$company.stat3_image}" style="max-width:200px;max-height:100px;border-radius:4px;border:1px solid #eee;"></div>
+                    {/if}
+                    <input type="file" name="stat3_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
+                </div>
+            </div>
+
+            <div style="background:#f8fbff;padding:20px;border-radius:8px;margin-bottom:16px;">
+                <h4 style="font-size:14px;color:#333;margin-bottom:12px;">统计项 4</h4>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+                    <div>
+                        <label style="font-size:13px;">数值</label>
+                        <input type="text" name="stat4_value" value="{$company.stat4_value|default='8'}">
+                    </div>
+                    <div>
+                        <label style="font-size:13px;">后缀</label>
+                        <input type="text" name="stat4_suffix" value="{$company.stat4_suffix|default=''}">
+                    </div>
+                    <div>
+                        <label style="font-size:13px;">标签</label>
+                        <input type="text" name="stat4_label" value="{$company.stat4_label|default='国际认证'}">
+                    </div>
+                </div>
+                <div style="margin-top:10px;">
+                    <label style="font-size:13px;">统计图片（替代数字显示）</label>
+                    {if condition="$company && $company['stat4_image']"}
+                    <div style="margin-bottom:8px;"><img src="{$company.stat4_image}" style="max-width:200px;max-height:100px;border-radius:4px;border:1px solid #eee;"></div>
+                    {/if}
+                    <input type="file" name="stat4_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
+                </div>
+            </div>
         </div>
 
         <!-- 联系我们 - 北方分部 -->
