@@ -2,6 +2,7 @@
 // 前台路由
 Route::get('/', 'index/Index/index');
 Route::get('about', 'index/About/index');
+Route::get('factory', 'index/Factory/index');
 
 Route::get('product/:id', 'index/Product/detail');
 Route::get('news/:id', 'index/News/detail');

@@ -10,25 +10,16 @@ class Company extends Base
         if ($this->request->isPost()) {
             $data = $this->request->post();
 
-            $logo = $this->uploadFile('logo', 'company');
-            if ($logo) {
-                $data['logo'] = $logo;
-            } else {
-                unset($data['logo']);
-            }
-
-            $wechat = $this->uploadFile('wechat_qrcode', 'company');
-            if ($wechat) {
-                $data['wechat_qrcode'] = $wechat;
-            } else {
-                unset($data['wechat_qrcode']);
-            }
-
-            $companyImage = $this->uploadFile('company_image', 'company');
-            if ($companyImage) {
-                $data['company_image'] = $companyImage;
-            } else {
-                unset($data['company_image']);
+            // 文件上传处理
+            $fileFields = ['logo', 'wechat_qrcode', 'company_image',
+                'stat1_image', 'stat2_image', 'stat3_image', 'stat4_image'];
+            foreach ($fileFields as $field) {
+                $file = $this->uploadFile($field, 'company');
+                if ($file) {
+                    $data[$field] = $file;
+                } else {
+                    unset($data[$field]);
+                }
             }
 
             $company = CompanyModel::find(1);
