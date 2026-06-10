@@ -11,8 +11,18 @@ class Product extends Base
         $category_id = $this->request->param('category_id', 0, 'intval');
         $keyword = $this->request->param('keyword', '', 'trim');
 
-        // 获取分类树
+        // 获取分类树，并标记折叠状态
         $categoryTree = ProductCategory::getCategoryTree();
+        foreach ($categoryTree as $cat) {
+            $childIds = [];
+            if ($cat->children_list) {
+                foreach ($cat->children_list as $child) {
+                    $childIds[] = $child->id;
+                }
+            }
+            // 当前选中的不是此分类，也不是其子分类，则折叠
+            $cat->is_collapsed = ($category_id > 0 && $category_id != $cat->id && !in_array($category_id, $childIds));
+        }
         $this->assign('categoryTree', $categoryTree);
 
         // 当前分类信息

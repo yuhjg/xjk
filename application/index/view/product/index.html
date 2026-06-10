@@ -23,7 +23,7 @@
                             <a href="/product">全部产品</a>
                         </li>
                         {volist name="categoryTree" id="cat"}
-                        <li class="cat-parent-item {if condition="$category_id==$cat['id']"}active{/if} {if condition="$category_id!=$cat['id'] && !in_array($category_id, array_column($cat['children_list']?:[], 'id'))"}collapsed{/if}">
+                        <li class="cat-parent-item {if condition="$category_id==$cat['id']"}active{/if} {if condition="$cat['is_collapsed']"}collapsed{/if}">
                             <a href="/product?category_id={$cat.id}" class="cat-parent">{$cat.name}</a>
                             {if condition="$cat.children_list && count($cat.children_list) > 0"}
                             <span class="cat-toggle" onclick="toggleCat(this)">▶</span>
