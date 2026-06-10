@@ -31,10 +31,12 @@
 <!-- 推荐产品 -->
 <section class="section" style="background:#f8fbff;">
     <div class="container">
+        {if condition="$company && $company.section_product_title"}
         <div class="section-header">
-            <h2>核心产品</h2>
-            <p>专业电源适配器解决方案，品质铸就信赖</p>
+            <h2>{$company.section_product_title|default='核心产品'}</h2>
+            {if condition="$company['section_product_subtitle']"}<p>{$company.section_product_subtitle}</p>{/if}
         </div>
+        {/if}
         <div class="product-grid">
             {volist name="recommend_products" id="product"}
             <a href="/product/{$product.id}" class="product-card">
@@ -116,10 +118,12 @@
 <!-- 新闻资讯 -->
 <section class="section" style="background:#f8fbff;">
     <div class="container">
+        {if condition="$company && $company.section_news_title"}
         <div class="section-header">
-            <h2>新闻资讯</h2>
-            <p>了解行业最新动态与公司新闻</p>
+            <h2>{$company.section_news_title|default='新闻资讯'}</h2>
+            {if condition="$company['section_news_subtitle']"}<p>{$company.section_news_subtitle}</p>{/if}
         </div>
+        {/if}
         <div class="news-list">
             {volist name="latest_news" id="news"}
             <a href="/news/{$news.id}" class="news-card">

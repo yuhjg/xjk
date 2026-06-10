@@ -102,6 +102,23 @@ img { max-width: 100%; vertical-align: middle; }
 .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: #1a5ca1; }
 .form-group textarea { height: 120px; resize: vertical; }
 
+/* 联系我们 - 双分部布局 */
+.contact-branches { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 50px; }
+.contact-branch-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.branch-header { background: linear-gradient(135deg, #1a5ca1, #0d3264); color: #fff; padding: 30px; text-align: center; }
+.branch-header.south { background: linear-gradient(135deg, #e63946, #b82d39); }
+.branch-header .branch-icon { font-size: 40px; margin-bottom: 10px; }
+.branch-header h3 { font-size: 22px; margin-bottom: 6px; }
+.branch-header .branch-company { font-size: 14px; opacity: 0.9; }
+.branch-body { padding: 30px; }
+.branch-row { display: flex; padding: 12px 0; border-bottom: 1px solid #f0f0f0; align-items: flex-start; }
+.branch-row:last-child { border-bottom: none; }
+.branch-label { width: 70px; flex-shrink: 0; font-size: 14px; color: #999; }
+.branch-value { font-size: 14px; color: #333; flex: 1; word-break: break-all; }
+.branch-value a { color: #1a5ca1; }
+.contact-form-wrapper { background: #fff; border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); max-width: 700px; margin: 0 auto; }
+.contact-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+
 /* ==================== Footer ==================== */
 .footer { background: #1a2744; color: #ccc; padding: 60px 0 0; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
@@ -213,6 +230,8 @@ img { max-width: 100%; vertical-align: middle; }
     .about-content { grid-template-columns: 1fr; }
     .stats { grid-template-columns: repeat(2, 1fr); }
     .contact-grid { grid-template-columns: 1fr; }
+    .contact-branches { grid-template-columns: 1fr; }
+    .contact-form-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
     .product-page-layout { grid-template-columns: 1fr; }
     .product-sidebar { position: static; }

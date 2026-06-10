@@ -132,6 +132,33 @@ CREATE TABLE `xjk_company` (
   `stat4_suffix` varchar(10) NOT NULL DEFAULT '' COMMENT '统计4-后缀',
   `stat4_label` varchar(50) NOT NULL DEFAULT '国际认证' COMMENT '统计4-标签',
   `stat4_image` varchar(255) NOT NULL DEFAULT '' COMMENT '统计4-图片',
+  `branch_north_name` varchar(50) NOT NULL DEFAULT '北方分部' COMMENT '北方分部名称',
+  `branch_north_company` varchar(100) NOT NULL DEFAULT '' COMMENT '北方分部公司全称',
+  `branch_north_contact1` varchar(30) NOT NULL DEFAULT '' COMMENT '北方联系人1',
+  `branch_north_phone1` varchar(50) NOT NULL DEFAULT '' COMMENT '北方电话1',
+  `branch_north_email1` varchar(50) NOT NULL DEFAULT '' COMMENT '北方邮箱1',
+  `branch_north_contact2` varchar(30) NOT NULL DEFAULT '' COMMENT '北方联系人2',
+  `branch_north_phone2` varchar(50) NOT NULL DEFAULT '' COMMENT '北方电话2',
+  `branch_north_email2` varchar(50) NOT NULL DEFAULT '' COMMENT '北方邮箱2',
+  `branch_north_website` varchar(100) NOT NULL DEFAULT '' COMMENT '北方网址',
+  `branch_north_address` varchar(200) NOT NULL DEFAULT '' COMMENT '北方地址',
+  `branch_south_name` varchar(50) NOT NULL DEFAULT '南方工厂' COMMENT '南方工厂名称',
+  `branch_south_company` varchar(100) NOT NULL DEFAULT '' COMMENT '南方公司全称',
+  `branch_south_contact` varchar(30) NOT NULL DEFAULT '' COMMENT '南方联系人',
+  `branch_south_phone` varchar(50) NOT NULL DEFAULT '' COMMENT '南方电话',
+  `branch_south_wechat` varchar(50) NOT NULL DEFAULT '' COMMENT '南方微信',
+  `branch_south_email` varchar(50) NOT NULL DEFAULT '' COMMENT '南方邮箱',
+  `branch_south_address` varchar(200) NOT NULL DEFAULT '' COMMENT '南方地址',
+  `factory_title` varchar(50) NOT NULL DEFAULT '' COMMENT '走进工厂-标题',
+  `factory_subtitle` varchar(200) NOT NULL DEFAULT '' COMMENT '走进工厂-副标题',
+  `factory_intro` text COMMENT '走进工厂-介绍',
+  `factory_features_title` varchar(50) NOT NULL DEFAULT '' COMMENT '工厂实力-标题',
+  `factory_features_subtitle` varchar(200) NOT NULL DEFAULT '' COMMENT '工厂实力-副标题',
+  `factory_features_content` text COMMENT '工厂实力-内容',
+  `section_product_title` varchar(50) NOT NULL DEFAULT '核心产品' COMMENT '首页产品区块标题',
+  `section_product_subtitle` varchar(200) NOT NULL DEFAULT '' COMMENT '首页产品区块副标题',
+  `section_news_title` varchar(50) NOT NULL DEFAULT '新闻资讯' COMMENT '首页新闻区块标题',
+  `section_news_subtitle` varchar(200) NOT NULL DEFAULT '' COMMENT '首页新闻区块副标题',
   `icp` varchar(50) NOT NULL DEFAULT '' COMMENT '备案号',
   `copyright` varchar(100) NOT NULL DEFAULT '' COMMENT '版权信息',
   `intro` text COMMENT '公司简介',
@@ -212,8 +239,8 @@ INSERT INTO `xjk_news` (`id`, `category_id`, `title`, `author`, `description`, `
 (3, 1, '我司新研发中心正式投入使用', 'admin', '郑州鑫聚康电子科技新研发中心正式投入使用，将进一步提升产品研发能力。', '<p>经过半年的精心筹备和建设，郑州鑫聚康电子科技有限公司新研发中心于近日正式投入使用。</p><p>新研发中心配备了先进的测试设备和研发工具，将进一步提升我司的产品研发能力和技术创新水平，为客户提供更加优质的电源适配器产品和服务。</p>', 75, 3, 1, 0, UNIX_TIMESTAMP()-86400*1);
 
 -- 公司信息
-INSERT INTO `xjk_company` (`id`, `name`, `short_name`, `phone`, `email`, `address`, `qq`, `wechat`, `icp`, `copyright`, `intro`, `culture`, `create_time`) VALUES
-(1, '郑州鑫聚康电子科技有限公司', '鑫聚康', '0371-88888888', 'info@xjkpower.com', '河南省郑州市高新区科学大道100号', '4008888888', 'xjkpower', '', '© 2024 郑州鑫聚康电子科技有限公司 版权所有', '<p>郑州鑫聚康电子科技有限公司是一家专业从事电源适配器研发、生产和销售的高新技术企业。公司成立于2010年，坐落于河南省郑州市高新区，拥有现代化的生产车间和先进的检测设备。</p><p>公司主要产品包括开关电源适配器、线性电源适配器、USB电源适配器、车载电源适配器等系列，广泛应用于安防监控、通信设备、工控仪器、消费电子等领域。产品通过CCC、CE、FCC、UL等多项国际认证，远销国内外市场。</p>', '<p><strong>企业使命：</strong>为全球客户提供安全可靠的电源解决方案</p><p><strong>企业愿景：</strong>成为中国电源适配器行业的领军企业</p><p><strong>核心价值观：</strong>品质第一、客户至上、持续创新、合作共赢</p>', UNIX_TIMESTAMP());
+INSERT INTO `xjk_company` (`id`, `name`, `short_name`, `phone`, `email`, `address`, `qq`, `wechat`, `icp`, `copyright`, `intro`, `culture`, `banner_height`, `stat1_value`, `stat1_suffix`, `stat1_label`, `stat2_value`, `stat2_suffix`, `stat2_label`, `stat3_value`, `stat3_suffix`, `stat3_label`, `stat4_value`, `stat4_suffix`, `stat4_label`, `branch_north_name`, `branch_north_company`, `branch_north_contact1`, `branch_north_phone1`, `branch_north_email1`, `branch_north_contact2`, `branch_north_phone2`, `branch_north_email2`, `branch_north_website`, `branch_north_address`, `branch_south_name`, `branch_south_company`, `branch_south_contact`, `branch_south_phone`, `branch_south_wechat`, `branch_south_email`, `branch_south_address`, `factory_title`, `factory_subtitle`, `factory_features_title`, `factory_features_subtitle`, `section_product_title`, `section_product_subtitle`, `section_news_title`, `section_news_subtitle`, `create_time`) VALUES
+(1, '郑州鑫聚康电子科技有限公司', '鑫聚康', '0371-88888888', 'info@xjkpower.com', '河南省郑州市管城回族区紫东路186号正商汇都中心A座410', '4008888888', 'xjkpower', '', '© 2024 郑州鑫聚康电子科技有限公司 版权所有', '<p>郑州鑫聚康电子科技有限公司是一家专业从事电源适配器研发、生产和销售的高新技术企业。公司成立于2010年，拥有现代化的生产车间和先进的检测设备。</p><p>公司主要产品包括开关电源适配器、线性电源适配器、USB电源适配器、车载电源适配器等系列，广泛应用于安防监控、通信设备、工控仪器、消费电子等领域。产品通过CCC、CE、FCC、UL等多项国际认证，远销国内外市场。</p>', '<p><strong>企业使命：</strong>为全球客户提供安全可靠的电源解决方案</p><p><strong>企业愿景：</strong>成为中国电源适配器行业的领军企业</p><p><strong>核心价值观：</strong>品质第一、客户至上、持续创新、合作共赢</p>', 600, '14', '+', '行业经验（年）', '200', '+', '产品种类', '500', '+', '服务客户', '8', '', '国际认证', '北方分部', '郑州鑫聚康电子科技有限公司', '李经理', '13798417929（微信同号）', 'szrcljb@163.com', '包经理', '15565298805（微信同号）', '15565298805@163.com', 'www.adapterxjk.com', '河南省郑州市管城回族区紫东路186号正商汇都中心A座410', '南方工厂', '深圳鑫聚康科技有限公司', '李经理', '13798417929', '13798417929', 'szrcljb@163.com', '深圳市宝安福海街稔田社区稔田工业南路9号3栋4楼', '走进工厂', '现代化生产基地 · 先进设备 · 严格品控', '工厂实力', '品质源于专业，实力铸就信赖', '核心产品', '专业电源适配器解决方案，品质铸就信赖', '新闻资讯', '了解行业最新动态与公司新闻', UNIX_TIMESTAMP());
 
 -- 轮播图
 INSERT INTO `xjk_banner` (`id`, `title`, `subtitle`, `image`, `link`, `sort`, `status`, `create_time`) VALUES

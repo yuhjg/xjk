@@ -9,6 +9,7 @@
 <div class="content-card form-page">
     <h3 style="font-size:18px;margin-bottom:24px;">公司信息设置</h3>
     <form id="companyForm" method="post" action="/admin/company" enctype="multipart/form-data">
+        <!-- 基本信息 -->
         <div class="form-group">
             <label>公司名称</label>
             <input type="text" name="name" value="{$company.name|default='郑州鑫聚康电子科技有限公司'}">
@@ -26,28 +27,12 @@
             <p class="tip">不选择图片则保持原图不变</p>
         </div>
         <div class="form-group">
-            <label>联系电话</label>
-            <input type="text" name="phone" value="{$company.phone|default=''}">
-        </div>
-        <div class="form-group">
-            <label>电子邮箱</label>
-            <input type="text" name="email" value="{$company.email|default=''}">
-        </div>
-        <div class="form-group">
-            <label>公司地址</label>
-            <input type="text" name="address" value="{$company.address|default=''}">
-        </div>
-        <div class="form-group">
-            <label>传真</label>
-            <input type="text" name="fax" value="{$company.fax|default=''}">
-        </div>
-        <div class="form-group">
-            <label>QQ</label>
-            <input type="text" name="qq" value="{$company.qq|default=''}">
-        </div>
-        <div class="form-group">
-            <label>微信号</label>
-            <input type="text" name="wechat" value="{$company.wechat|default=''}">
+            <label>公司形象图</label>
+            {if condition="$company && $company.company_image"}
+            <div style="margin-bottom:8px;"><img src="{$company.company_image}" style="max-width:400px;max-height:200px;border-radius:4px;border:1px solid #eee;"></div>
+            {/if}
+            <input type="file" name="company_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
+            <p class="tip">用于"关于我们"页面的公司形象展示，建议尺寸800×500</p>
         </div>
         <div class="form-group">
             <label>微信二维码</label>
@@ -55,15 +40,6 @@
             <div style="margin-bottom:8px;"><img src="{$company.wechat_qrcode}" style="max-width:150px;max-height:150px;border-radius:4px;border:1px solid #eee;"></div>
             {/if}
             <input type="file" name="wechat_qrcode" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
-            <p class="tip">不选择图片则保持原图不变</p>
-        </div>
-        <div class="form-group">
-            <label>公司形象图</label>
-            {if condition="$company && $company.company_image"}
-            <div style="margin-bottom:8px;"><img src="{$company.company_image}" style="max-width:400px;max-height:200px;border-radius:4px;border:1px solid #eee;"></div>
-            {/if}
-            <input type="file" name="company_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
-            <p class="tip">用于"关于我们"页面的公司形象展示，建议尺寸800×500</p>
         </div>
         <div class="form-group">
             <label>备案号</label>
@@ -96,105 +72,175 @@
         <div style="margin-top:30px;padding-top:20px;border-top:2px solid #1a5ca1;">
             <h3 style="font-size:16px;color:#1a5ca1;margin-bottom:20px;">📊 统计数据设置</h3>
             <p class="tip" style="margin-bottom:16px;">设置首页和关于我们页面展示的统计数据。如上传图片则显示图片，否则显示数字。</p>
-
+            {for start="1" end="4" name="i"}
             <div style="background:#f8fbff;padding:20px;border-radius:8px;margin-bottom:16px;">
-                <h4 style="font-size:14px;color:#333;margin-bottom:12px;">统计项 1</h4>
+                <h4 style="font-size:14px;color:#333;margin-bottom:12px;">统计项 {$i}</h4>
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
                     <div>
                         <label style="font-size:13px;">数值</label>
-                        <input type="text" name="stat1_value" value="{$company.stat1_value|default='14'}" placeholder="如：14">
+                        <input type="text" name="stat{$i}_value" value="{$company['stat'.$i.'_value']|default=''}">
                     </div>
                     <div>
                         <label style="font-size:13px;">后缀</label>
-                        <input type="text" name="stat1_suffix" value="{$company.stat1_suffix|default='+'}" placeholder="如：+">
+                        <input type="text" name="stat{$i}_suffix" value="{$company['stat'.$i.'_suffix']|default=''}">
                     </div>
                     <div>
                         <label style="font-size:13px;">标签</label>
-                        <input type="text" name="stat1_label" value="{$company.stat1_label|default='行业经验（年）'}" placeholder="如：行业经验（年）">
+                        <input type="text" name="stat{$i}_label" value="{$company['stat'.$i.'_label']|default=''}">
                     </div>
                 </div>
                 <div style="margin-top:10px;">
                     <label style="font-size:13px;">统计图片（替代数字显示）</label>
-                    {if condition="$company && $company.stat1_image"}
-                    <div style="margin-bottom:8px;"><img src="{$company.stat1_image}" style="max-width:200px;max-height:100px;border-radius:4px;border:1px solid #eee;"></div>
+                    {php}$si={$i};$simg='stat'.$si.'_image';{/php}
+                    {if condition="$company && $company[$simg]"}
+                    <div style="margin-bottom:8px;"><img src="{$company[$simg]}" style="max-width:200px;max-height:100px;border-radius:4px;border:1px solid #eee;"></div>
                     {/if}
-                    <input type="file" name="stat1_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
-                    <p class="tip">上传图片后，前端将显示图片替代数字文字</p>
+                    <input type="file" name="stat{$i}_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
                 </div>
             </div>
+            {/for}
+        </div>
 
-            <div style="background:#f8fbff;padding:20px;border-radius:8px;margin-bottom:16px;">
-                <h4 style="font-size:14px;color:#333;margin-bottom:12px;">统计项 2</h4>
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-                    <div>
-                        <label style="font-size:13px;">数值</label>
-                        <input type="text" name="stat2_value" value="{$company.stat2_value|default='200'}" placeholder="如：200">
-                    </div>
-                    <div>
-                        <label style="font-size:13px;">后缀</label>
-                        <input type="text" name="stat2_suffix" value="{$company.stat2_suffix|default='+'}" placeholder="如：+">
-                    </div>
-                    <div>
-                        <label style="font-size:13px;">标签</label>
-                        <input type="text" name="stat2_label" value="{$company.stat2_label|default='产品种类'}" placeholder="如：产品种类">
-                    </div>
+        <!-- 联系我们 - 北方分部 -->
+        <div style="margin-top:30px;padding-top:20px;border-top:2px solid #1a5ca1;">
+            <h3 style="font-size:16px;color:#1a5ca1;margin-bottom:20px;">🏢 北方分部信息</h3>
+            <div class="form-group">
+                <label>分部名称</label>
+                <input type="text" name="branch_north_name" value="{$company.branch_north_name|default='北方分部'}">
+            </div>
+            <div class="form-group">
+                <label>公司全称</label>
+                <input type="text" name="branch_north_company" value="{$company.branch_north_company|default='郑州鑫聚康电子科技有限公司'}">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 20px;">
+                <div class="form-group">
+                    <label>联系人1</label>
+                    <input type="text" name="branch_north_contact1" value="{$company.branch_north_contact1|default=''}" placeholder="如：李经理">
                 </div>
-                <div style="margin-top:10px;">
-                    <label style="font-size:13px;">统计图片（替代数字显示）</label>
-                    {if condition="$company && $company.stat2_image"}
-                    <div style="margin-bottom:8px;"><img src="{$company.stat2_image}" style="max-width:200px;max-height:100px;border-radius:4px;border:1px solid #eee;"></div>
-                    {/if}
-                    <input type="file" name="stat2_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
+                <div class="form-group">
+                    <label>电话1</label>
+                    <input type="text" name="branch_north_phone1" value="{$company.branch_north_phone1|default=''}" placeholder="如：13798417929（微信同号）">
                 </div>
             </div>
-
-            <div style="background:#f8fbff;padding:20px;border-radius:8px;margin-bottom:16px;">
-                <h4 style="font-size:14px;color:#333;margin-bottom:12px;">统计项 3</h4>
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-                    <div>
-                        <label style="font-size:13px;">数值</label>
-                        <input type="text" name="stat3_value" value="{$company.stat3_value|default='500'}" placeholder="如：500">
-                    </div>
-                    <div>
-                        <label style="font-size:13px;">后缀</label>
-                        <input type="text" name="stat3_suffix" value="{$company.stat3_suffix|default='+'}" placeholder="如：+">
-                    </div>
-                    <div>
-                        <label style="font-size:13px;">标签</label>
-                        <input type="text" name="stat3_label" value="{$company.stat3_label|default='服务客户'}" placeholder="如：服务客户">
-                    </div>
+            <div class="form-group">
+                <label>邮箱1</label>
+                <input type="text" name="branch_north_email1" value="{$company.branch_north_email1|default=''}">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 20px;">
+                <div class="form-group">
+                    <label>联系人2</label>
+                    <input type="text" name="branch_north_contact2" value="{$company.branch_north_contact2|default=''}" placeholder="如：包经理">
                 </div>
-                <div style="margin-top:10px;">
-                    <label style="font-size:13px;">统计图片（替代数字显示）</label>
-                    {if condition="$company && $company.stat3_image"}
-                    <div style="margin-bottom:8px;"><img src="{$company.stat3_image}" style="max-width:200px;max-height:100px;border-radius:4px;border:1px solid #eee;"></div>
-                    {/if}
-                    <input type="file" name="stat3_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
+                <div class="form-group">
+                    <label>电话2</label>
+                    <input type="text" name="branch_north_phone2" value="{$company.branch_north_phone2|default=''}" placeholder="如：15565298805（微信同号）">
                 </div>
             </div>
+            <div class="form-group">
+                <label>邮箱2</label>
+                <input type="text" name="branch_north_email2" value="{$company.branch_north_email2|default=''}">
+            </div>
+            <div class="form-group">
+                <label>网址</label>
+                <input type="text" name="branch_north_website" value="{$company.branch_north_website|default=''}" placeholder="如：www.adapterxjk.com">
+            </div>
+            <div class="form-group">
+                <label>地址</label>
+                <input type="text" name="branch_north_address" value="{$company.branch_north_address|default=''}">
+            </div>
+        </div>
 
+        <!-- 联系我们 - 南方工厂 -->
+        <div style="margin-top:30px;padding-top:20px;border-top:2px solid #e63946;">
+            <h3 style="font-size:16px;color:#e63946;margin-bottom:20px;">🏭 南方工厂信息</h3>
+            <div class="form-group">
+                <label>工厂名称</label>
+                <input type="text" name="branch_south_name" value="{$company.branch_south_name|default='南方工厂'}">
+            </div>
+            <div class="form-group">
+                <label>公司全称</label>
+                <input type="text" name="branch_south_company" value="{$company.branch_south_company|default='深圳鑫聚康科技有限公司'}">
+            </div>
+            <div class="form-group">
+                <label>联系人</label>
+                <input type="text" name="branch_south_contact" value="{$company.branch_south_contact|default=''}" placeholder="如：李经理">
+            </div>
+            <div class="form-group">
+                <label>电话</label>
+                <input type="text" name="branch_south_phone" value="{$company.branch_south_phone|default=''}">
+            </div>
+            <div class="form-group">
+                <label>微信</label>
+                <input type="text" name="branch_south_wechat" value="{$company.branch_south_wechat|default=''}">
+            </div>
+            <div class="form-group">
+                <label>邮箱</label>
+                <input type="text" name="branch_south_email" value="{$company.branch_south_email|default=''}">
+            </div>
+            <div class="form-group">
+                <label>地址</label>
+                <input type="text" name="branch_south_address" value="{$company.branch_south_address|default=''}">
+            </div>
+        </div>
+
+        <!-- 走进工厂配置 -->
+        <div style="margin-top:30px;padding-top:20px;border-top:2px solid #1a5ca1;">
+            <h3 style="font-size:16px;color:#1a5ca1;margin-bottom:20px;">🏭 走进工厂设置</h3>
+            <p class="tip" style="margin-bottom:16px;">设置"走进工厂"页面的文字内容。图片请在后台"图片管理"中上传，分类填写"工厂车间"、"工厂设备"、"工厂实验室"等。</p>
+            <div class="form-group">
+                <label>页面标题</label>
+                <input type="text" name="factory_title" value="{$company.factory_title|default=''}" placeholder="如：走进工厂，留空则不显示标题">
+            </div>
+            <div class="form-group">
+                <label>页面副标题</label>
+                <input type="text" name="factory_subtitle" value="{$company.factory_subtitle|default=''}" placeholder="如：现代化生产基地·先进设备·严格品控，留空则不显示">
+            </div>
+            <div class="form-group">
+                <label>页面介绍文字</label>
+                <textarea name="factory_intro" style="height:120px;" placeholder="工厂介绍文字，留空则不显示">{$company.factory_intro|default=''}</textarea>
+            </div>
+            <div class="form-group">
+                <label>实力区块标题</label>
+                <input type="text" name="factory_features_title" value="{$company.factory_features_title|default=''}" placeholder="如：工厂实力，留空则不显示整个区块">
+            </div>
+            <div class="form-group">
+                <label>实力区块副标题</label>
+                <input type="text" name="factory_features_subtitle" value="{$company.factory_features_subtitle|default=''}" placeholder="留空则不显示">
+            </div>
+            <div class="form-group">
+                <label>实力区块内容</label>
+                <textarea name="factory_features_content" style="height:200px;" placeholder="支持HTML，如特色卡片等，留空则不显示">{$company.factory_features_content|default=''}</textarea>
+            </div>
+        </div>
+
+        <!-- 首页区块标题配置 -->
+        <div style="margin-top:30px;padding-top:20px;border-top:2px solid #1a5ca1;">
+            <h3 style="font-size:16px;color:#1a5ca1;margin-bottom:20px;">📝 首页区块标题设置</h3>
+            <p class="tip" style="margin-bottom:16px;">设置首页各区块的标题和副标题。留空则该区块不显示标题栏。</p>
             <div style="background:#f8fbff;padding:20px;border-radius:8px;margin-bottom:16px;">
-                <h4 style="font-size:14px;color:#333;margin-bottom:12px;">统计项 4</h4>
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-                    <div>
-                        <label style="font-size:13px;">数值</label>
-                        <input type="text" name="stat4_value" value="{$company.stat4_value|default='8'}" placeholder="如：8">
+                <h4 style="font-size:14px;color:#333;margin-bottom:12px;">核心产品区块</h4>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 20px;">
+                    <div class="form-group">
+                        <label style="font-size:13px;">标题</label>
+                        <input type="text" name="section_product_title" value="{$company.section_product_title|default=''}" placeholder="如：核心产品">
                     </div>
-                    <div>
-                        <label style="font-size:13px;">后缀</label>
-                        <input type="text" name="stat4_suffix" value="{$company.stat4_suffix|default=''}" placeholder="如：+">
-                    </div>
-                    <div>
-                        <label style="font-size:13px;">标签</label>
-                        <input type="text" name="stat4_label" value="{$company.stat4_label|default='国际认证'}" placeholder="如：国际认证">
+                    <div class="form-group">
+                        <label style="font-size:13px;">副标题</label>
+                        <input type="text" name="section_product_subtitle" value="{$company.section_product_subtitle|default=''}" placeholder="如：专业电源适配器解决方案">
                     </div>
                 </div>
-                <div style="margin-top:10px;">
-                    <label style="font-size:13px;">统计图片（替代数字显示）</label>
-                    {if condition="$company && $company.stat4_image"}
-                    <div style="margin-bottom:8px;"><img src="{$company.stat4_image}" style="max-width:200px;max-height:100px;border-radius:4px;border:1px solid #eee;"></div>
-                    {/if}
-                    <input type="file" name="stat4_image" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp" style="margin-bottom:10px;">
+            </div>
+            <div style="background:#f8fbff;padding:20px;border-radius:8px;margin-bottom:16px;">
+                <h4 style="font-size:14px;color:#333;margin-bottom:12px;">新闻资讯区块</h4>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 20px;">
+                    <div class="form-group">
+                        <label style="font-size:13px;">标题</label>
+                        <input type="text" name="section_news_title" value="{$company.section_news_title|default=''}" placeholder="如：新闻资讯">
+                    </div>
+                    <div class="form-group">
+                        <label style="font-size:13px;">副标题</label>
+                        <input type="text" name="section_news_subtitle" value="{$company.section_news_subtitle|default=''}" placeholder="如：了解行业最新动态与公司新闻">
+                    </div>
                 </div>
             </div>
         </div>

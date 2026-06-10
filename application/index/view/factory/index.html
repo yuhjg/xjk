@@ -10,10 +10,18 @@
 <!-- 工厂展示 -->
 <section class="section">
     <div class="container">
+        {if condition="$company && $company.factory_title"}
         <div class="section-header">
-            <h2>走进工厂</h2>
-            <p>现代化生产基地 · 先进设备 · 严格品控</p>
+            <h2>{$company.factory_title|default='走进工厂'}</h2>
+            {if condition="$company['factory_subtitle']"}<p>{$company.factory_subtitle}</p>{/if}
         </div>
+        {/if}
+
+        {if condition="$company && $company.factory_intro"}
+        <div style="max-width:800px;margin:0 auto 40px;font-size:15px;color:#666;line-height:2;text-align:center;">
+            {$company.factory_intro|raw}
+        </div>
+        {/if}
 
         {volist name="factoryCategories" id="catName"}
         <div class="factory-category-block">
@@ -38,61 +46,30 @@
         </div>
         {/volist}
 
-        <!-- 如果没有按分类的，显示所有"走进工厂"图片 -->
-        {if condition="empty($factoryCategories) && !empty($factoryImages)"}
-        <div class="factory-category-block">
-            <div class="factory-gallery">
-                {volist name="factoryImages" id="img"}
-                <div class="factory-gallery-item">
-                    <div class="factory-img-box">
-                        <img src="{$img.image}" alt="{$img.title}" loading="lazy">
-                    </div>
-                    <div class="factory-img-title">{$img.title}</div>
-                </div>
-                {/volist}
-            </div>
-        </div>
-        {/if}
-
-        {if condition="empty($factoryCategories) && empty($factoryImages)"}
+        {if condition="empty($factoryCategories)"}
         <div style="text-align:center;padding:80px 0;color:#999;">
             <p style="font-size:18px;margin-bottom:10px;">暂无工厂展示</p>
-            <p style="font-size:14px;">请在后台图片管理中添加"走进工厂"分类的图片</p>
+            <p style="font-size:14px;">请在后台图片管理中添加分类为"工厂车间"或"走进工厂"的图片</p>
         </div>
         {/if}
     </div>
 </section>
 
 <!-- 工厂实力 -->
+{if condition="$company && $company.factory_features_title"}
 <section class="section" style="background:#f8fbff;">
     <div class="container">
         <div class="section-header">
-            <h2>工厂实力</h2>
-            <p>品质源于专业，实力铸就信赖</p>
+            <h2>{$company.factory_features_title|default='工厂实力'}</h2>
+            {if condition="$company['factory_features_subtitle']"}<p>{$company.factory_features_subtitle}</p>{/if}
         </div>
-        <div class="factory-features">
-            <div class="factory-feature-item">
-                <div class="feature-icon">🏭</div>
-                <h4>现代化车间</h4>
-                <p>标准化生产车间，洁净的生产环境，确保产品品质</p>
-            </div>
-            <div class="factory-feature-item">
-                <div class="feature-icon">🔧</div>
-                <h4>先进设备</h4>
-                <p>引进国际先进生产设备和检测仪器，保障产能与品质</p>
-            </div>
-            <div class="factory-feature-item">
-                <div class="feature-icon">🔬</div>
-                <h4>专业实验室</h4>
-                <p>独立实验室，全流程品质检测，确保每台产品达标</p>
-            </div>
-            <div class="factory-feature-item">
-                <div class="feature-icon">✅</div>
-                <h4>国际认证</h4>
-                <p>通过CCC、CE、FCC、UL等多项国际认证，品质全球认可</p>
-            </div>
+        {if condition="$company && $company.factory_features_content"}
+        <div style="max-width:900px;margin:0 auto;">
+            {$company.factory_features_content|raw}
         </div>
+        {/if}
     </div>
 </section>
+{/if}
 
 {include file="public/footer"}

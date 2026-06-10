@@ -14,89 +14,137 @@
             <p>期待与您的合作，欢迎来电咨询</p>
         </div>
 
-        <div class="contact-grid">
-            <div class="contact-info">
-                <h3>联系方式</h3>
-                <div class="contact-item">
-                    <div class="icon">📞</div>
-                    <div class="text">
-                        <h4>联系电话</h4>
-                        <p>{$company.phone|default='0371-88888888'}</p>
-                    </div>
+        <div class="contact-branches">
+            <!-- 北方分部 -->
+            <div class="contact-branch-card">
+                <div class="branch-header">
+                    <div class="branch-icon">🏢</div>
+                    <h3>{$company.branch_north_name|default='北方分部'}</h3>
+                    <p class="branch-company">{$company.branch_north_company|default='郑州鑫聚康电子科技有限公司'}</p>
                 </div>
-                <div class="contact-item">
-                    <div class="icon">📧</div>
-                    <div class="text">
-                        <h4>电子邮箱</h4>
-                        <p>{$company.email|default='info@xjkpower.com'}</p>
+                <div class="branch-body">
+                    {if condition="$company.branch_north_contact1"}
+                    <div class="branch-row">
+                        <span class="branch-label">联系人</span>
+                        <span class="branch-value">{$company.branch_north_contact1|default=''}</span>
                     </div>
-                </div>
-                <div class="contact-item">
-                    <div class="icon">📍</div>
-                    <div class="text">
-                        <h4>公司地址</h4>
-                        <p>{$company.address|default='河南省郑州市高新区'}</p>
+                    {/if}
+                    {if condition="$company.branch_north_phone1"}
+                    <div class="branch-row">
+                        <span class="branch-label">电话</span>
+                        <span class="branch-value"><a href="tel:{$company.branch_north_phone1}">{$company.branch_north_phone1}</a></span>
                     </div>
-                </div>
-                {if condition="$company.qq"}
-                <div class="contact-item">
-                    <div class="icon">💬</div>
-                    <div class="text">
-                        <h4>QQ咨询</h4>
-                        <p>{$company.qq}</p>
+                    {/if}
+                    {if condition="$company.branch_north_email1"}
+                    <div class="branch-row">
+                        <span class="branch-label">邮箱</span>
+                        <span class="branch-value"><a href="mailto:{$company.branch_north_email1}">{$company.branch_north_email1}</a></span>
                     </div>
-                </div>
-                {/if}
-                {if condition="$company.wechat"}
-                <div class="contact-item">
-                    <div class="icon">📱</div>
-                    <div class="text">
-                        <h4>微信号</h4>
-                        <p>{$company.wechat}</p>
+                    {/if}
+                    {if condition="$company.branch_north_contact2"}
+                    <div class="branch-row">
+                        <span class="branch-label">联系人</span>
+                        <span class="branch-value">{$company.branch_north_contact2|default=''}</span>
                     </div>
-                </div>
-                {/if}
-                {if condition="$company.fax"}
-                <div class="contact-item">
-                    <div class="icon">📠</div>
-                    <div class="text">
-                        <h4>传真</h4>
-                        <p>{$company.fax}</p>
+                    {/if}
+                    {if condition="$company.branch_north_phone2"}
+                    <div class="branch-row">
+                        <span class="branch-label">电话</span>
+                        <span class="branch-value"><a href="tel:{$company.branch_north_phone2}">{$company.branch_north_phone2}</a></span>
                     </div>
+                    {/if}
+                    {if condition="$company.branch_north_email2"}
+                    <div class="branch-row">
+                        <span class="branch-label">邮箱</span>
+                        <span class="branch-value"><a href="mailto:{$company.branch_north_email2}">{$company.branch_north_email2}</a></span>
+                    </div>
+                    {/if}
+                    {if condition="$company.branch_north_website"}
+                    <div class="branch-row">
+                        <span class="branch-label">网址</span>
+                        <span class="branch-value"><a href="http://{$company.branch_north_website}" target="_blank">{$company.branch_north_website}</a></span>
+                    </div>
+                    {/if}
+                    {if condition="$company.branch_north_address"}
+                    <div class="branch-row">
+                        <span class="branch-label">地址</span>
+                        <span class="branch-value">{$company.branch_north_address|default=''}</span>
+                    </div>
+                    {/if}
                 </div>
-                {/if}
             </div>
-            <div class="contact-form">
-                <h3>在线留言</h3>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label>您的姓名 <span style="color:#e63946;">*</span></label>
-                        <input type="text" name="name" placeholder="请输入您的姓名" required>
+
+            <!-- 南方工厂 -->
+            <div class="contact-branch-card">
+                <div class="branch-header south">
+                    <div class="branch-icon">🏭</div>
+                    <h3>{$company.branch_south_name|default='南方工厂'}</h3>
+                    <p class="branch-company">{$company.branch_south_company|default='深圳鑫聚康科技有限公司'}</p>
+                </div>
+                <div class="branch-body">
+                    {if condition="$company.branch_south_contact"}
+                    <div class="branch-row">
+                        <span class="branch-label">联系人</span>
+                        <span class="branch-value">{$company.branch_south_contact|default=''}</span>
                     </div>
-                    <div class="form-group">
-                        <label>联系电话 <span style="color:#e63946;">*</span></label>
-                        <input type="text" name="phone" placeholder="请输入您的联系电话" required>
+                    {/if}
+                    {if condition="$company.branch_south_phone"}
+                    <div class="branch-row">
+                        <span class="branch-label">电话</span>
+                        <span class="branch-value"><a href="tel:{$company.branch_south_phone}">{$company.branch_south_phone}</a></span>
                     </div>
-                    <div class="form-group">
-                        <label>电子邮箱</label>
-                        <input type="email" name="email" placeholder="请输入您的邮箱">
+                    {/if}
+                    {if condition="$company.branch_south_wechat"}
+                    <div class="branch-row">
+                        <span class="branch-label">微信</span>
+                        <span class="branch-value">{$company.branch_south_wechat|default=''}</span>
                     </div>
-                    <div class="form-group">
-                        <label>留言内容 <span style="color:#e63946;">*</span></label>
-                        <textarea name="message" placeholder="请输入您要咨询的内容" required></textarea>
+                    {/if}
+                    {if condition="$company.branch_south_email"}
+                    <div class="branch-row">
+                        <span class="branch-label">邮箱</span>
+                        <span class="branch-value"><a href="mailto:{$company.branch_south_email}">{$company.branch_south_email}</a></span>
                     </div>
-                    <button type="submit" class="btn-primary" style="width:100%;text-align:center;">提交留言</button>
-                </form>
+                    {/if}
+                    {if condition="$company.branch_south_address"}
+                    <div class="branch-row">
+                        <span class="branch-label">地址</span>
+                        <span class="branch-value">{$company.branch_south_address|default=''}</span>
+                    </div>
+                    {/if}
+                </div>
             </div>
         </div>
 
-        <!-- 地图区域 -->
-        <div style="margin-top:50px;background:#f5f8fc;border-radius:8px;height:300px;display:flex;align-items:center;justify-content:center;">
-            <p style="color:#bbb;font-size:16px;">{$company.address|default='河南省郑州市高新区科学大道100号'}</p>
+        <!-- 在线留言 -->
+        <div class="contact-form-wrapper">
+            <h3 style="font-size:22px;color:#1a5ca1;margin-bottom:24px;text-align:center;">在线留言</h3>
+            <form id="contactForm" class="contact-form-grid">
+                <div class="form-group">
+                    <label>您的姓名 <span style="color:#e63946;">*</span></label>
+                    <input type="text" name="name" placeholder="请输入您的姓名" required>
+                </div>
+                <div class="form-group">
+                    <label>联系电话 <span style="color:#e63946;">*</span></label>
+                    <input type="text" name="phone" placeholder="请输入您的联系电话" required>
+                </div>
+                <div class="form-group">
+                    <label>电子邮箱</label>
+                    <input type="email" name="email" placeholder="请输入您的邮箱">
+                </div>
+                <div class="form-group" style="grid-column:1/-1;">
+                    <label>留言内容 <span style="color:#e63946;">*</span></label>
+                    <textarea name="message" placeholder="请输入您要咨询的内容" required></textarea>
+                </div>
+                <div style="grid-column:1/-1;text-align:center;">
+                    <button type="submit" class="btn-primary" style="padding:14px 60px;">提交留言</button>
+                </div>
+            </form>
         </div>
     </div>
 </section>
 
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
