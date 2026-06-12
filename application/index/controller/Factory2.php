@@ -28,6 +28,7 @@ class Factory extends Base
         }
 
         $this->assign('factoryCategories', $factoryCategories);
+
         $factoryCategories2 = Image::where('status', 1)
             ->where('category', 'like', '实力%')
             ->group('category')

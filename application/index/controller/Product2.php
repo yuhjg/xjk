@@ -20,6 +20,7 @@ class Product extends Base
                     $childIds[] = $child->id;
                 }
             }
+            
             // 当前选中的不是此分类，也不是其子分类，则折叠
             $cat->is_collapsed = ($category_id > 0 && $category_id != $cat->id && !in_array($category_id, $childIds));
             if ($cat->parent_id == 0 && $category_id == 0) {
@@ -80,27 +81,12 @@ class Product extends Base
             $related = ProductModel::where('status', 1)->where('category_id', $categoryId)->where('id', '<>', $id)->limit(4)->select();
         }
 
-        // 处理产品图片列表（多图优先，否则用单图）
-        $productImages = [];
-        if (!empty($product->images)) {
-            $decoded = json_decode($product->images, true);
-            if (is_array($decoded)) {
-                foreach ($decoded as $img) {
-                    if (!empty($img)) $productImages[] = $img;
-                }
-            }
-        }
-        if (empty($productImages) && !empty($product->image)) {
-            $productImages[] = $product->image;
-        }
-
         // 分类树（侧边栏用）
         $categoryTree = ProductCategory::getCategoryTree();
         $this->assign('categoryTree', $categoryTree);
 
         $this->assign('product', $product);
         $this->assign('related', $related);
-        $this->assign('productImages', $productImages);
         return $this->fetch();
     }
 }

@@ -1,0 +1,80 @@
+{include file="public/header"}
+
+<!-- 面包屑 -->
+<div class="breadcrumb">
+    <div class="container">
+        <a href="/">首页</a> <span>/</span> <span>产品服务</span>
+        {if condition="$currentCategory"}
+        <span>/</span> <span>{$currentCategory.name}</span>
+        {/if}
+    </div>
+</div>
+
+<!-- 产品列表 -->
+<section class="section">
+    <div class="container">
+        <div class="product-page-layout">
+            <!-- 左侧分类 -->
+            <aside class="product-sidebar">
+                <div class="sidebar-category">
+                    <h3>产品分类</h3>
+                    <ul class="category-tree">
+                        <li class="{:$category_id==0?'active':''}">
+                            <a href="/product">全部产品</a>
+                        </li>
+                        {volist name="categoryTree" id="cat"}
+                        <li class="cat-parent-item {if condition="$category_id==$cat['id']"}active{/if} {if condition="$cat['is_collapsed']"}collapsed{/if}">
+                            <a href="/product?category_id={$cat.id}" class="cat-parent">{$cat.name}</a>
+                            {if condition="$cat.children_list && count($cat.children_list) > 0"}
+                            <span class="cat-toggle" onclick="toggleCat(this)">▶</span>
+                            <ul class="cat-children">
+                                {volist name="cat.children_list" id="child"}
+                                <li class="{:$category_id==$child['id']?'active':''}">
+                                    <a href="/product?category_id={$child.id}">{$child.name}</a>
+                                </li>
+                                {/volist}
+                            </ul>
+                            {/if}
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- 右侧产品列表 -->
+            <div class="product-main">
+                <div class="product-main-header">
+                    <h2>{if condition="$currentCategory"}{$currentCategory.name}{else/}产品中心{/if}</h2>
+                </div>
+                <div class="product-grid">
+                    {volist name="products" id="product"}
+                    <a href="/product/{$product.id}" class="product-card">
+                        <div class="img-box">
+                            {if condition="$product.image"}
+                            <img src="{$product.image}" alt="{$product.title}">
+                            {else/}
+                            <span class="no-img">电源适配器</span>
+                            {/if}
+                        </div>
+                        <div class="info">
+                            <h3>{$product.title}</h3>
+                            <p>{$product.subtitle|default=$product.description|default=''}</p>
+                            <span class="tag">{$product.category_name|default=''}</span>
+                        </div>
+                    </a>
+                    {/volist}
+                </div>
+
+                {empty name="products"}
+                <div style="text-align:center;padding:60px;color:#999;">
+                    <p style="font-size:18px;">暂无相关产品</p>
+                </div>
+                {/empty}
+
+                <div class="pagination">{$products|raw}</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{include file="public/footer"}

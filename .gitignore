@@ -7,3 +7,7 @@
 !/runtime/.gitkeep
 /public/uploads/*
 !/public/uploads/.gitkeep
+ud.sql
+xjk_backup.sql
+xjk_data.sql
+/config/database.php

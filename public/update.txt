@@ -1,0 +1,15 @@
+
+D:\phpstudy_pro\WWW\xjk\xjk\public
+https://github.com/yuhjg/xjk
+git fetch origin
+git reset --hard origin/main
+
+
+https://www.hongfenzz.cn/admin/hf/index/#/hf/product_list?perPage=50&page=1
+
+use xjk;
+后面再mysql可以更新
+http://xjk.hongfenzz.cn/admin
+
+本地：
+http://www.xjk.cn/admin/

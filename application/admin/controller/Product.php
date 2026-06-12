@@ -137,6 +137,7 @@ class Product extends Base
             }
 
             $data['images'] = json_encode($existImages, JSON_UNESCAPED_SLASHES);
+            unset($data['remove_images']);
 
             if (ProductModel::where('id', $id)->update($data) !== false) {
                 return $this->iframeMsg('修改成功', 1, '/admin/product');
