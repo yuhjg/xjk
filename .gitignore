@@ -10,4 +10,4 @@
 ud.sql
 xjk_backup.sql
 xjk_data.sql
-/config/database.php
+config/database.php
