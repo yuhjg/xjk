@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纯CSS动画设计展示</title>
+    <style>
+        body {
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 768px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px;
+        }
+
+        .title {
+            text-align: center;
+            color: #555;
+            margin-top: 20px;
+        }
+
+        .card {
+            width: 30%;
+            max-width: 264px;
+            border-radius: 8px; /* CSS keyframes and transform */
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .card__content {
+            padding: 8px;
+            text-align: center;
+            background-color: #fff;
+            border-radius: inherit;
+        }
+
+        .card__image {
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card__content {
+                opacity: 0.5;
+            }
+        }
+
+        /* CSS keyframes for loading animations */
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+            border: 8px solid #f90;
+            border-top-color: transparent; /* transparent color for spinner effect */
+            border-radius: 45px;
+            width: 45px;
+            height: 45px;
+        }
+
+        /* Pulse animation */
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pulse-animation {
+            border: 8px solid #f90;
+            border-top-color: transparent;
+            border-radius: 45px;
+            width: 45px;
+            height: 45px;
+        }
+
+        /* Bounce columns */
+
+        @keyframes bounce {
+            0%, 100% { opacity: 1; }
+            20%, 60% { opacity: 0.8; }
+            80%, 90% { opacity: 0.5; }
+        }
+
+        .bounce-columns {
+            background-color: #f90;
+            border-top-color: transparent;
+            border-radius: 30px;
+            width: 80px;
+            height: 140px;
+        }
+
+        /* Wave animation */
+
+        @keyframes wave {
+            from { transform: scale(1); }
+            to { transform: scale(2.5); }
+        }
+
+        .wave-animation {
+            animation: wave 1s linear infinite;
+            border: 8px solid #f90;
+            border-top-color: transparent;
+            border-radius: 45px;
+            width: 45px;
+            height: 45px;
+        }
+
+        /* Gradient spinner */
+
+        @keyframes gradient-spinner {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .gradient-spinner {
+            animation: gradient-spinner 1s linear infinite;
+            border-radius: 45px;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(to bottom, #ff0, #f90);
+        }
+
+        /* Typewriter indicator */
+
+        @keyframes typewriter-text {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .typewriter-text {
+            display: flex;
+            justify-content: center;
+        }
+
+        .typewriter-text__dot {
+            background-color: #555;
+            border-radius: 8px;
+            padding: 4px;
+            margin: 2px;
+        }
+
+        /* Animation for full loading effect */
+
+        @keyframes full-loading {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .full-loading {
+            animation: full-loading 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">纯CSS动画设计展示</h1>
+        <div class="card">
+            <div class="card__content">
+                <img src="loading-spinner.gif" alt="Spin" class="loading-spinner">
+                <h2 class="text-center">加载 Spinner</h2>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__content">
+                <img src="pulse-animation.gif" alt="Pulse" class="pulse-animation">
+                <h2 class="text-center">脉冲动画</h2>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__content">
+                <img src="bounce-columns.gif" alt="Bounce Columns" class="bounce-columns">
+                <h2 class="text-center">反弹列</h2>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__content">
+                <img src="wave-animation.gif" alt="Wave" class="wave-animation">
+                <h2 class="text-center">波浪动画</h2>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__content">
+                <img src="gradient-spinner.gif" alt="Gradient Spinner" class="gradient-spinner">
+                <h2 class="text-center">梯度 spinner</h2>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card__content">
+                <img src="typewriter-text.png" alt="Typewriter Text" class="typewriter-text">
+                <h2 class="text-center"> typing 文字指示器</h2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

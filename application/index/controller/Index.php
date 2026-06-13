@@ -24,4 +24,7 @@ class Index extends Base
 
         return $this->fetch();
     }
+    public function css(){
+        return $this->fetch();
+    }
 }
