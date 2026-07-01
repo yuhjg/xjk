@@ -45,6 +45,29 @@
         </div>
     </footer>
 
+    <!-- 微信联系弹窗 -->
+    <div id="wxPopup" class="wx-popup">
+        <div class="wx-popup-card">
+            <span class="wx-popup-close" onclick="closeWxPopup()">×</span>
+            <div class="wx-popup-header">
+                <span class="wx-popup-icon">💬</span>
+                <span>在线咨询</span>
+            </div>
+            <div class="wx-popup-body">
+                <div class="wx-popup-qr">
+                    <img src="/wx.png" alt="微信二维码">
+                </div>
+                <p class="wx-popup-tip">扫一扫，添加微信咨询</p>
+                {if condition="$company && $company.wechat"}
+                <div class="wx-popup-id">
+                    <span class="wx-popup-label">微信号：</span>
+                    <span class="wx-popup-num">{$company.wechat}</span>
+                </div>
+                {/if}
+            </div>
+        </div>
+    </div>
+
     <script>
     // 分类折叠/展开
     function toggleCat(el) {
@@ -92,6 +115,33 @@
         thumbs.forEach(function(t) { t.classList.remove('active'); });
         thumb.classList.add('active');
     }
+
+    // 微信弹窗 - 每天只弹出一次
+    function closeWxPopup() {
+        var popup = document.getElementById('wxPopup');
+        popup.classList.remove('show');
+        // 记录今天已关闭
+        var today = new Date().toISOString().slice(0, 10);
+        try {
+            localStorage.setItem('wx_popup_closed_' + today, '1');
+        } catch(e) {}
+    }
+
+    (function() {
+        var today = new Date().toISOString().slice(0, 10);
+        var closed = false;
+        try {
+            closed = localStorage.getItem('wx_popup_closed_' + today) === '1';
+        } catch(e) {}
+
+        if (!closed) {
+            // 延迟2秒弹出
+            setTimeout(function() {
+                var popup = document.getElementById('wxPopup');
+                if (popup) popup.classList.add('show');
+            }, 2000);
+        }
+    })();
     </script>
 </body>
 </html>

@@ -233,6 +233,22 @@ img { max-width: 100%; vertical-align: middle; }
 .product-detail-body p { margin-bottom: 16px; }
 .product-detail-body img { max-width: 100%; border-radius: 4px; }
 
+/* ==================== WeChat Popup ==================== */
+.wx-popup { position: fixed; bottom: 30px; right: 30px; z-index: 9999; opacity: 0; visibility: hidden; transform: translateY(20px) scale(0.95); transition: all 0.4s ease; }
+.wx-popup.show { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+.wx-popup-card { position: relative; width: 220px; background: #fff; border-radius: 12px; box-shadow: 0 8px 40px rgba(0,0,0,0.15); overflow: hidden; }
+.wx-popup-close { position: absolute; top: 8px; right: 10px; width: 24px; height: 24px; line-height: 22px; text-align: center; font-size: 18px; color: #999; cursor: pointer; border-radius: 50%; background: rgba(255,255,255,0.9); z-index: 2; transition: all 0.2s; }
+.wx-popup-close:hover { color: #fff; background: #e63946; }
+.wx-popup-header { background: linear-gradient(135deg, #1a5ca1, #0d3264); color: #fff; padding: 14px 16px; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.wx-popup-icon { font-size: 18px; }
+.wx-popup-body { padding: 16px; text-align: center; }
+.wx-popup-qr { width: 160px; height: 160px; margin: 0 auto 10px; border-radius: 8px; overflow: hidden; border: 1px solid #eee; }
+.wx-popup-qr img { width: 100%; height: 100%; object-fit: cover; }
+.wx-popup-tip { font-size: 13px; color: #888; margin-bottom: 8px; }
+.wx-popup-id { display: inline-flex; align-items: center; gap: 4px; padding: 6px 14px; background: #f0f6ff; border-radius: 20px; }
+.wx-popup-label { font-size: 13px; color: #888; }
+.wx-popup-num { font-size: 14px; color: #1a5ca1; font-weight: 600; }
+
 /* ==================== Responsive ==================== */
 @media (max-width: 1024px) {
     .product-grid { grid-template-columns: repeat(3, 1fr); }
@@ -263,6 +279,9 @@ img { max-width: 100%; vertical-align: middle; }
     .product-sidebar { position: static; }
     .factory-gallery { grid-template-columns: repeat(2, 1fr); }
     .factory-features { grid-template-columns: repeat(2, 1fr); }
+    .wx-popup { bottom: 15px; right: 15px; }
+    .wx-popup-card { width: 180px; }
+    .wx-popup-qr { width: 130px; height: 130px; }
 }
 @media (max-width: 480px) {
     .product-grid { grid-template-columns: 1fr; }
