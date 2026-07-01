@@ -68,6 +68,12 @@
         </div>
     </div>
 
+    <!-- 联系我悬浮按钮 -->
+    <div id="wxFloatBtn" class="wx-float-btn" onclick="openWxPopup()" style="display:none;">
+        <span class="wx-float-icon">💬</span>
+        <span class="wx-float-text">联系我</span>
+    </div>
+
     <script>
     // 分类折叠/展开
     function toggleCat(el) {
@@ -116,15 +122,23 @@
         thumb.classList.add('active');
     }
 
-    // 微信弹窗 - 每天只弹出一次
+    // 微信弹窗 - 每天只自动弹出一次
     function closeWxPopup() {
         var popup = document.getElementById('wxPopup');
         popup.classList.remove('show');
+        // 显示悬浮按钮
+        var floatBtn = document.getElementById('wxFloatBtn');
+        if (floatBtn) floatBtn.style.display = 'flex';
         // 记录今天已关闭
         var today = new Date().toISOString().slice(0, 10);
         try {
             localStorage.setItem('wx_popup_closed_' + today, '1');
         } catch(e) {}
+    }
+
+    function openWxPopup() {
+        var popup = document.getElementById('wxPopup');
+        if (popup) popup.classList.add('show');
     }
 
     (function() {
@@ -135,11 +149,15 @@
         } catch(e) {}
 
         if (!closed) {
-            // 延迟2秒弹出
+            // 延迟2秒自动弹出
             setTimeout(function() {
                 var popup = document.getElementById('wxPopup');
                 if (popup) popup.classList.add('show');
             }, 2000);
+        } else {
+            // 今天已关闭过，直接显示悬浮按钮
+            var floatBtn = document.getElementById('wxFloatBtn');
+            if (floatBtn) floatBtn.style.display = 'flex';
         }
     })();
     </script>
